@@ -154,3 +154,121 @@ export async function getProductBySlugAction(slug: string) {
     return createErrorResponse(errMessage);
   }
 }
+
+/**
+ * Server Action: Create Product (Admin Only)
+ */
+export async function createProductAction(data: {
+  name: string;
+  categorySlug: string;
+  sku: string;
+  basePrice: number;
+  salePrice?: number;
+  stockQuantity: number;
+  imageUrl: string;
+  shortDescription: string;
+  description: string;
+}) {
+  try {
+    const slug = data.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+    const category = await prisma.category.findUnique({
+      where: { slug: data.categorySlug },
+    });
+
+    if (!category) {
+      return createErrorResponse("Category not found");
+    }
+
+    const product = await prisma.product.create({
+      data: {
+        name: data.name,
+        slug: `${slug}-${Math.floor(Math.random() * 1000)}`,
+        sku: data.sku || `SKU-${Math.floor(Math.random() * 10000)}`,
+        shortDescription: data.shortDescription,
+        description: data.description || data.shortDescription,
+        categoryId: category.id,
+        basePrice: Number(data.basePrice),
+        salePrice: data.salePrice ? Number(data.salePrice) : null,
+        stockQuantity: Number(data.stockQuantity),
+        isFeatured: true,
+        images: {
+          create: [
+            {
+              url: data.imageUrl || "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+              altText: data.name,
+              isPrimary: true,
+            },
+          ],
+        },
+      },
+    });
+
+    return createSuccessResponse(product, "Product created successfully!");
+  } catch (error: unknown) {
+    const errMessage = error instanceof Error ? error.message : "Failed to create product";
+    return createErrorResponse(errMessage);
+  }
+}
+
+/**
+ * Server Action: Update Product (Admin Only)
+ */
+export async function updateProductAction(
+  productId: string,
+  data: {
+    name?: string;
+    basePrice?: number;
+    salePrice?: number;
+    stockQuantity?: number;
+    imageUrl?: string;
+    shortDescription?: string;
+  }
+) {
+  try {
+    const product = await prisma.product.update({
+      where: { id: productId },
+      data: {
+        ...(data.name && { name: data.name }),
+        ...(data.basePrice !== undefined && { basePrice: Number(data.basePrice) }),
+        ...(data.salePrice !== undefined && { salePrice: data.salePrice ? Number(data.salePrice) : null }),
+        ...(data.stockQuantity !== undefined && { stockQuantity: Number(data.stockQuantity) }),
+        ...(data.shortDescription && { shortDescription: data.shortDescription }),
+      },
+    });
+
+    if (data.imageUrl) {
+      await prisma.productImage.deleteMany({ where: { productId } });
+      await prisma.productImage.create({
+        data: {
+          productId,
+          url: data.imageUrl,
+          altText: product.name,
+          isPrimary: true,
+        },
+      });
+    }
+
+    return createSuccessResponse(product, "Product updated successfully!");
+  } catch (error: unknown) {
+    const errMessage = error instanceof Error ? error.message : "Failed to update product";
+    return createErrorResponse(errMessage);
+  }
+}
+
+/**
+ * Server Action: Delete Product (Admin Only)
+ */
+export async function deleteProductAction(productId: string) {
+  try {
+    await prisma.product.update({
+      where: { id: productId },
+      data: { isDeleted: true, isActive: false },
+    });
+    return createSuccessResponse(null, "Product deleted successfully!");
+  } catch (error: unknown) {
+    const errMessage = error instanceof Error ? error.message : "Failed to delete product";
+    return createErrorResponse(errMessage);
+  }
+}
+
