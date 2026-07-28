@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/utils";
 import { createOrderAction } from "@/actions/orders";
+import { addAddressAction } from "@/actions/user";
 import { toast } from "sonner";
-import { MapPin, CreditCard, Banknote, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
+import { MapPin, CreditCard, Banknote, CheckCircle2, ArrowRight, Plus, X, Building2 } from "lucide-react";
 import { PaymentMethod } from "@prisma/client";
 
 interface CheckoutFormProps {
@@ -19,14 +20,58 @@ interface CheckoutFormProps {
 
 export function CheckoutForm({ user, items, subtotal }: CheckoutFormProps) {
   const router = useRouter();
+  const [addresses, setAddresses] = useState<any[]>(user.addresses || []);
   const [selectedAddressId, setSelectedAddressId] = useState<string>(
     user.addresses[0]?.id || ""
   );
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.RAZORPAY);
   const [loading, setLoading] = useState(false);
+  const [isAddAddressOpen, setIsAddAddressOpen] = useState(false);
+  const [savingAddress, setSavingAddress] = useState(false);
+
+  // Address Form State
+  const [addressForm, setAddressForm] = useState({
+    fullName: user.fullName || "",
+    phone: user.phone || "",
+    street: "",
+    city: "Manali",
+    state: "Himachal Pradesh",
+    pincode: "",
+  });
 
   const shippingFee = subtotal >= 1999 ? 0 : 150;
   const grandTotal = subtotal + shippingFee;
+
+  const handleAddAddressSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingAddress(true);
+
+    try {
+      const res = await addAddressAction(addressForm);
+      const newAddr: any = res.data;
+
+      if (res.success && newAddr) {
+        toast.success("Delivery address saved!");
+        setAddresses([newAddr, ...addresses]);
+        setSelectedAddressId(newAddr.id);
+        setIsAddAddressOpen(false);
+        setAddressForm({
+          fullName: user.fullName || "",
+          phone: user.phone || "",
+          street: "",
+          city: "Manali",
+          state: "Himachal Pradesh",
+          pincode: "",
+        });
+      } else {
+        toast.error(res.error || "Failed to save address.");
+      }
+    } catch {
+      toast.error("Error saving delivery address.");
+    } finally {
+      setSavingAddress(false);
+    }
+  };
 
   const handlePlaceOrder = async () => {
     if (!selectedAddressId) {
@@ -60,25 +105,41 @@ export function CheckoutForm({ user, items, subtotal }: CheckoutFormProps) {
       <div className="lg:col-span-2 space-y-8">
         {/* 1. Select Delivery Address */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-              1
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                1
+              </div>
+              <h2 className="text-xl font-bold font-serif">Delivery Address</h2>
             </div>
-            <h2 className="text-xl font-bold font-serif">Delivery Address</h2>
+            {addresses.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-xl font-semibold gap-1.5 text-xs"
+                onClick={() => setIsAddAddressOpen(true)}
+              >
+                <Plus className="h-3.5 w-3.5" /> Add New Address
+              </Button>
+            )}
           </div>
 
-          {user.addresses.length === 0 ? (
+          {addresses.length === 0 ? (
             <Card className="glass-card p-6 rounded-2xl text-center space-y-3">
-              <MapPin className="h-8 w-8 text-muted-foreground mx-auto" />
+              <MapPin className="h-8 w-8 text-primary mx-auto" />
               <p className="text-sm font-semibold">No saved addresses found</p>
-              <p className="text-xs text-muted-foreground">Please add an address in your account settings before checkout.</p>
-              <Button size="sm" onClick={() => router.push("/dashboard")}>
-                Add Address
+              <p className="text-xs text-muted-foreground">Add your delivery address below to proceed with checkout.</p>
+              <Button
+                size="sm"
+                className="rounded-xl font-bold gap-2 bg-gradient-to-r from-primary to-emerald-600"
+                onClick={() => setIsAddAddressOpen(true)}
+              >
+                <Plus className="h-4 w-4" /> Add Delivery Address
               </Button>
             </Card>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {user.addresses.map((addr: any) => (
+              {addresses.map((addr: any) => (
                 <div
                   key={addr.id}
                   onClick={() => setSelectedAddressId(addr.id)}
@@ -185,7 +246,7 @@ export function CheckoutForm({ user, items, subtotal }: CheckoutFormProps) {
 
           <Button
             size="lg"
-            className="w-full rounded-2xl font-bold gap-2 shadow-lg shadow-primary/20"
+            className="w-full rounded-2xl font-bold gap-2 shadow-lg shadow-primary/20 bg-gradient-to-r from-primary to-emerald-600"
             onClick={handlePlaceOrder}
             isLoading={loading}
           >
@@ -193,6 +254,100 @@ export function CheckoutForm({ user, items, subtotal }: CheckoutFormProps) {
           </Button>
         </div>
       </div>
+
+      {/* INLINE ADD ADDRESS MODAL */}
+      {isAddAddressOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md overflow-y-auto">
+          <Card className="glass-card rounded-3xl p-6 lg:p-8 border w-full max-w-lg space-y-6 shadow-2xl relative my-8">
+            <div className="flex items-center justify-between border-b pb-4">
+              <h3 className="text-xl font-bold font-serif flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-primary" /> Add Delivery Address
+              </h3>
+              <Button variant="ghost" size="icon" className="rounded-full" onClick={() => setIsAddAddressOpen(false)}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+
+            <form onSubmit={handleAddAddressSubmit} className="space-y-4 text-xs">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="font-bold text-muted-foreground">Full Name</label>
+                  <Input
+                    required
+                    placeholder="Aarav Sharma"
+                    value={addressForm.fullName}
+                    onChange={(e) => setAddressForm({ ...addressForm, fullName: e.target.value })}
+                    className="rounded-xl text-xs"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="font-bold text-muted-foreground">Mobile Phone</label>
+                  <Input
+                    required
+                    placeholder="+91 98765 43210"
+                    value={addressForm.phone}
+                    onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
+                    className="rounded-xl text-xs font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-muted-foreground">Street Address / House / Orchard No.</label>
+                <Input
+                  required
+                  placeholder="e.g. 12 Pine View Colony, Mall Road"
+                  value={addressForm.street}
+                  onChange={(e) => setAddressForm({ ...addressForm, street: e.target.value })}
+                  className="rounded-xl text-xs"
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div className="space-y-1">
+                  <label className="font-bold text-muted-foreground">City</label>
+                  <Input
+                    required
+                    placeholder="Manali"
+                    value={addressForm.city}
+                    onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
+                    className="rounded-xl text-xs"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="font-bold text-muted-foreground">State</label>
+                  <Input
+                    required
+                    placeholder="Himachal Pradesh"
+                    value={addressForm.state}
+                    onChange={(e) => setAddressForm({ ...addressForm, state: e.target.value })}
+                    className="rounded-xl text-xs"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="font-bold text-muted-foreground">PIN Code</label>
+                  <Input
+                    required
+                    placeholder="175131"
+                    value={addressForm.pincode}
+                    onChange={(e) => setAddressForm({ ...addressForm, pincode: e.target.value })}
+                    className="rounded-xl text-xs font-mono"
+                  />
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full rounded-2xl font-bold gap-2 mt-2 bg-gradient-to-r from-primary to-emerald-600"
+                isLoading={savingAddress}
+              >
+                Save & Use For Delivery
+              </Button>
+            </form>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
