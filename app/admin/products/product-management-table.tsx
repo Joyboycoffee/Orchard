@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/utils";
 import { createProductAction, updateProductAction, deleteProductAction } from "@/actions/products";
 import { toast } from "sonner";
-import { Plus, Edit2, Trash2, X, Image as ImageIcon, Check } from "lucide-react";
+import { Plus, Edit2, Trash2, X, Image as ImageIcon, Check, Upload, RefreshCw } from "lucide-react";
 
 interface ProductManagementTableProps {
   initialProducts: any[];
@@ -18,7 +18,7 @@ interface ProductManagementTableProps {
 export function ProductManagementTable({ initialProducts }: ProductManagementTableProps) {
   const router = useRouter();
   const [products, setProducts] = useState<any[]>(initialProducts);
-  
+
   // Modals state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
@@ -65,6 +65,24 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
     });
   };
 
+  // Device File Upload Handler (reads image file from gallery into Data URL)
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size should be less than 5MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64String = event.target?.result as string;
+        setFormData((prev) => ({ ...prev, imageUrl: base64String }));
+        toast.success("Photo loaded from gallery!");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   // Create Product Submit
   const handleCreateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +96,7 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
         basePrice: Number(formData.basePrice),
         salePrice: formData.salePrice ? Number(formData.salePrice) : undefined,
         stockQuantity: Number(formData.stockQuantity),
-        imageUrl: formData.imageUrl,
+        imageUrl: formData.imageUrl || "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
         shortDescription: formData.shortDescription,
         description: formData.shortDescription,
       });
@@ -87,7 +105,7 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
         toast.success("Product created successfully!");
         setIsAddModalOpen(false);
         resetForm();
-        router.refresh();
+        window.location.reload();
       } else {
         toast.error(res.error || "Failed to create product");
       }
@@ -118,9 +136,14 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
         toast.success("Product updated successfully!");
         setEditingProduct(null);
         resetForm();
-        router.refresh();
+        window.location.reload();
       } else {
-        toast.error(res.error || "Failed to update product");
+        if (res.error?.includes("not found")) {
+          toast.error("Catalog updated on server. Reloading latest records...");
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          toast.error(res.error || "Failed to update product");
+        }
       }
     } catch {
       toast.error("Error updating product");
@@ -140,7 +163,12 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
         setProducts(products.filter((p) => p.id !== productId));
         router.refresh();
       } else {
-        toast.error(res.error || "Failed to delete product");
+        if (res.error?.includes("not found")) {
+          toast.error("Catalog updated on server. Reloading latest records...");
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          toast.error(res.error || "Failed to delete product");
+        }
       }
     } catch {
       toast.error("Error deleting product");
@@ -148,31 +176,42 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-full overflow-x-hidden">
       {/* Top Header Bar with Add Product button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold font-serif">Product Catalog & Nursery Stock</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Manage inventory levels, base prices, sale discounts, and high-density saplings.
+            Manage inventory levels, base prices, sale discounts, and gallery image uploads.
           </p>
         </div>
-        <Button
-          size="sm"
-          className="rounded-xl font-bold gap-2 self-start sm:self-auto shadow-lg shadow-primary/20"
-          onClick={() => {
-            resetForm();
-            setIsAddModalOpen(true);
-          }}
-        >
-          <Plus className="h-4 w-4" /> Add New Product
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-xl font-semibold gap-1.5"
+            onClick={() => window.location.reload()}
+            title="Reload latest catalog records"
+          >
+            <RefreshCw className="h-4 w-4" /> Refresh Catalog
+          </Button>
+          <Button
+            size="sm"
+            className="rounded-xl font-bold gap-2 shadow-lg shadow-primary/20 bg-gradient-to-r from-primary to-emerald-600"
+            onClick={() => {
+              resetForm();
+              setIsAddModalOpen(true);
+            }}
+          >
+            <Plus className="h-4 w-4" /> Add New Product
+          </Button>
+        </div>
       </div>
 
       {/* Table Card */}
-      <Card className="glass-card rounded-3xl p-6 border">
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left">
+      <Card className="glass-card rounded-3xl p-4 sm:p-6 border max-w-full overflow-x-hidden">
+        <div className="overflow-x-auto max-w-full">
+          <table className="w-full text-xs text-left min-w-[650px]">
             <thead className="border-b bg-muted/40 text-muted-foreground">
               <tr>
                 <th className="p-3">Product Name & Image</th>
@@ -239,8 +278,8 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
 
       {/* CREATE PRODUCT MODAL */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md">
-          <Card className="glass-card rounded-3xl p-6 lg:p-8 border w-full max-w-lg space-y-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md overflow-y-auto">
+          <Card className="glass-card rounded-3xl p-6 lg:p-8 border w-full max-w-lg space-y-6 shadow-2xl relative my-8">
             <div className="flex items-center justify-between border-b pb-4">
               <h3 className="text-xl font-bold font-serif flex items-center gap-2">
                 <Plus className="h-5 w-5 text-primary" /> Add New Product
@@ -325,15 +364,43 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-muted-foreground">Image URL</label>
+              {/* MEDIA PICKER / FILE UPLOAD */}
+              <div className="space-y-2">
+                <label className="font-bold text-muted-foreground flex items-center justify-between">
+                  <span>Product Image</span>
+                  <span className="text-[10px] text-muted-foreground font-normal">Gallery Upload or Link</span>
+                </label>
+
+                <div className="flex items-center gap-2">
+                  <label className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border bg-muted/40 hover:bg-muted cursor-pointer text-xs font-semibold transition-colors flex-1 text-center">
+                    <Upload className="h-4 w-4 text-primary" />
+                    <span>Upload Image from Device Gallery</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                  </label>
+                </div>
+
                 <Input
-                  required
-                  placeholder="https://images.unsplash.com/photo-..."
+                  placeholder="Or paste web image URL (https://...)"
                   value={formData.imageUrl}
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                  className="rounded-xl text-xs"
+                  className="rounded-xl text-xs font-mono"
                 />
+
+                {formData.imageUrl && (
+                  <div className="flex items-center gap-3 p-2 rounded-xl border bg-muted/20">
+                    <div className="h-14 w-14 rounded-lg overflow-hidden border shrink-0 bg-muted">
+                      <img src={formData.imageUrl} alt="Preview" className="object-cover w-full h-full" />
+                    </div>
+                    <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-1">
+                      <Check className="h-3.5 w-3.5" /> Image ready for publish
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-1">
@@ -358,8 +425,8 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
 
       {/* EDIT PRODUCT MODAL */}
       {editingProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md">
-          <Card className="glass-card rounded-3xl p-6 lg:p-8 border w-full max-w-lg space-y-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md overflow-y-auto">
+          <Card className="glass-card rounded-3xl p-6 lg:p-8 border w-full max-w-lg space-y-6 shadow-2xl relative my-8">
             <div className="flex items-center justify-between border-b pb-4">
               <h3 className="text-xl font-bold font-serif flex items-center gap-2">
                 <Edit2 className="h-5 w-5 text-primary" /> Edit Product Details & Image
@@ -414,19 +481,41 @@ export function ProductManagementTable({ initialProducts }: ProductManagementTab
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-muted-foreground flex items-center gap-1.5">
-                  <ImageIcon className="h-3.5 w-3.5 text-primary" /> Product Image URL
+              {/* MEDIA PICKER / FILE UPLOAD */}
+              <div className="space-y-2">
+                <label className="font-bold text-muted-foreground flex items-center justify-between">
+                  <span>Product Image</span>
+                  <span className="text-[10px] text-muted-foreground font-normal">Gallery Upload or Link</span>
                 </label>
+
+                <div className="flex items-center gap-2">
+                  <label className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border bg-muted/40 hover:bg-muted cursor-pointer text-xs font-semibold transition-colors flex-1 text-center">
+                    <Upload className="h-4 w-4 text-primary" />
+                    <span>Upload New Photo from Device Gallery</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                  </label>
+                </div>
+
                 <Input
-                  required
+                  placeholder="Or paste web image URL (https://...)"
                   value={formData.imageUrl}
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                   className="rounded-xl text-xs font-mono"
                 />
+
                 {formData.imageUrl && (
-                  <div className="h-20 w-20 rounded-xl overflow-hidden border mt-2 bg-muted">
-                    <img src={formData.imageUrl} alt="Preview" className="object-cover w-full h-full" />
+                  <div className="flex items-center gap-3 p-2 rounded-xl border bg-muted/20">
+                    <div className="h-16 w-16 rounded-lg overflow-hidden border shrink-0 bg-muted">
+                      <img src={formData.imageUrl} alt="Preview" className="object-cover w-full h-full" />
+                    </div>
+                    <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-1">
+                      <Check className="h-3.5 w-3.5" /> Updated image preview ready
+                    </span>
                   </div>
                 )}
               </div>

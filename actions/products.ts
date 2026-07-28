@@ -226,6 +226,14 @@ export async function updateProductAction(
   }
 ) {
   try {
+    const existing = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!existing) {
+      return createErrorResponse("Product record not found. Please refresh the page to load fresh catalog data.");
+    }
+
     const product = await prisma.product.update({
       where: { id: productId },
       data: {
@@ -261,6 +269,14 @@ export async function updateProductAction(
  */
 export async function deleteProductAction(productId: string) {
   try {
+    const existing = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!existing) {
+      return createErrorResponse("Product record not found. Please refresh the page.");
+    }
+
     await prisma.product.update({
       where: { id: productId },
       data: { isDeleted: true, isActive: false },
