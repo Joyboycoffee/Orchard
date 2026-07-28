@@ -6,22 +6,29 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Starting Orchard database seeding with distinct high-res product catalog...");
 
-  // 1. Clear existing data
-  await prisma.auditLog.deleteMany();
-  await prisma.review.deleteMany();
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
-  await prisma.cartItem.deleteMany();
-  await prisma.wishlistItem.deleteMany();
-  await prisma.productVariant.deleteMany();
-  await prisma.productImage.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.subcategory.deleteMany();
-  await prisma.category.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.coupon.deleteMany();
-  await prisma.banner.deleteMany();
-  await prisma.blogPost.deleteMany();
+  // 1. Clear existing data safely in reverse dependency order
+  const safeDelete = async (model: any) => {
+    try { await model.deleteMany(); } catch {}
+  };
+
+  await safeDelete(prisma.auditLog);
+  await safeDelete(prisma.review);
+  await safeDelete(prisma.orderItem);
+  await safeDelete(prisma.order);
+  await safeDelete(prisma.cartItem);
+  await safeDelete(prisma.cart);
+  await safeDelete(prisma.wishlistItem);
+  await safeDelete(prisma.wishlist);
+  await safeDelete(prisma.address);
+  await safeDelete(prisma.productVariant);
+  await safeDelete(prisma.productImage);
+  await safeDelete(prisma.product);
+  await safeDelete(prisma.subcategory);
+  await safeDelete(prisma.category);
+  await safeDelete(prisma.blogPost);
+  await safeDelete(prisma.banner);
+  await safeDelete(prisma.coupon);
+  await safeDelete(prisma.user);
 
   // 2. Create Users
   const passwordHash = await bcrypt.hash("AdminPassword123!", 10);
