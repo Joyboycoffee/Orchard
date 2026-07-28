@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { addToCartAction } from "@/actions/cart";
 import { toast } from "sonner";
-import { ShoppingBag, Minus, Plus, Heart } from "lucide-react";
+import { ShoppingBag, Minus, Plus, Heart, Zap } from "lucide-react";
 import { toggleWishlistAction } from "@/actions/wishlist";
 
 interface AddToCartButtonProps {
@@ -13,8 +14,10 @@ interface AddToCartButtonProps {
 }
 
 export function AddToCartButton({ productId, stock }: AddToCartButtonProps) {
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
 
   const handleAddToCart = async () => {
@@ -31,6 +34,24 @@ export function AddToCartButton({ productId, stock }: AddToCartButtonProps) {
       toast.error("Failed to add to cart");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (stock <= 0) return;
+    setBuyNowLoading(true);
+    try {
+      const res = await addToCartAction(productId, undefined, quantity);
+      if (res.success) {
+        toast.success("Proceeding to checkout...");
+        router.push("/checkout");
+      } else {
+        toast.error(res.error || "Please sign in to proceed to checkout.");
+      }
+    } catch {
+      toast.error("Buy Now action failed");
+    } finally {
+      setBuyNowLoading(false);
     }
   };
 
@@ -52,8 +73,8 @@ export function AddToCartButton({ productId, stock }: AddToCartButtonProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-4">
-        {/* Quantity Stepper */}
+      {/* Quantity Stepper & Add to Cart */}
+      <div className="flex items-center gap-3">
         <div className="flex items-center rounded-xl border bg-background/50 p-1">
           <Button
             variant="ghost"
@@ -76,29 +97,40 @@ export function AddToCartButton({ productId, stock }: AddToCartButtonProps) {
           </Button>
         </div>
 
-        {/* Add to Cart Button */}
         <Button
           size="lg"
-          className="flex-1 rounded-2xl gap-2 font-bold shadow-lg shadow-primary/20"
+          variant="outline"
+          className="flex-1 rounded-2xl gap-2 font-bold"
           onClick={handleAddToCart}
           isLoading={loading}
           disabled={stock <= 0}
         >
-          <ShoppingBag className="h-5 w-5" />
-          {stock > 0 ? "Add To Shopping Cart" : "Sold Out"}
+          <ShoppingBag className="h-4 w-4" />
+          {stock > 0 ? "Add To Cart" : "Sold Out"}
         </Button>
 
-        {/* Wishlist Button */}
         <Button
           variant="outline"
           size="icon"
-          className="h-13 w-13 rounded-2xl shrink-0"
+          className="h-12 w-12 rounded-2xl shrink-0"
           onClick={handleToggleWishlist}
           isLoading={wishlistLoading}
         >
           <Heart className="h-5 w-5 text-destructive" />
         </Button>
       </div>
+
+      {/* Buy Now Direct Checkout Button */}
+      <Button
+        size="lg"
+        className="w-full rounded-2xl gap-2 font-bold shadow-lg shadow-primary/25 bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-700"
+        onClick={handleBuyNow}
+        isLoading={buyNowLoading}
+        disabled={stock <= 0}
+      >
+        <Zap className="h-4 w-4 fill-current" />
+        Buy Now (Instant Checkout)
+      </Button>
     </div>
   );
 }

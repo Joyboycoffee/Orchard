@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Starting Orchard database seeding...");
+  console.log("🌱 Starting Orchard database seeding with distinct high-res product catalog...");
 
   // 1. Clear existing data
   await prisma.auditLog.deleteMany();
@@ -133,7 +133,7 @@ async function main() {
       slug: "gardening-accessories",
       type: CategoryType.GARDENING_ACCESSORIES,
       description: "Professional pruning shears, grafting wax, trellis wire, and bio-nutrients.",
-      imageUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80",
+      imageUrl: "https://images.unsplash.com/photo-1585336261026-9136355506c7?auto=format&fit=crop&w=800&q=80",
       subcategories: {
         create: [
           { name: "Pruning Tools", slug: "pruning", description: "Japanese carbon steel secateurs & loppers." },
@@ -146,8 +146,8 @@ async function main() {
 
   console.log("✅ Created categories & subcategories");
 
-  // 4. Create Products
-  // Fresh Apple Product
+  // 4. Create 14 Distinct Products with Unique Images
+  // Product 1: Honeycrisp Apple
   const honeycrispApple = await prisma.product.create({
     data: {
       name: "Kullu Royal Honeycrisp Apples",
@@ -169,21 +169,112 @@ async function main() {
         create: [
           {
             url: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-            altText: "Kullu Royal Honeycrisp Apples Basket",
+            altText: "Kullu Royal Honeycrisp Apples Crate",
             isPrimary: true,
           },
-        ],
-      },
-      variants: {
-        create: [
-          { name: "3 kg Box", sku: "APP-HC-3KG", price: 499, salePrice: 399, stock: 100, attributes: { weight: "3kg" } },
-          { name: "5 kg Gift Crate", sku: "APP-HC-5KG", price: 899, salePrice: 749, stock: 50, attributes: { weight: "5kg" } },
+          {
+            url: "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?auto=format&fit=crop&w=800&q=80",
+            altText: "Fresh Sliced Honeycrisp Apple",
+            isPrimary: false,
+          },
         ],
       },
     },
   });
 
-  // Apple Tree Sapling
+  // Product 2: Fuji Apple
+  const fujiApple = await prisma.product.create({
+    data: {
+      name: "Himalayan Fuji Supreme Apples",
+      slug: "himalayan-fuji-supreme-apples",
+      sku: "APP-FJ-002",
+      shortDescription: "Sweet, dense & long-storing high-altitude Fuji apples.",
+      description: "Known for their intense honey sweetness and dense crunch, these Fuji apples stay fresh for months. Hand-sorted for premium coloration and zero internal watercore.",
+      categoryId: freshApplesCat.id,
+      basePrice: 549,
+      salePrice: 449,
+      costPrice: 220,
+      variety: "Fuji Supreme",
+      harvestSeason: "Late October",
+      fruitSize: "Extra Large (85mm)",
+      stockQuantity: 120,
+      isFeatured: true,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=800&q=80",
+            altText: "Himalayan Fuji Supreme Apple on Branch",
+            isPrimary: true,
+          },
+          {
+            url: "https://images.unsplash.com/photo-1579613832111-ac7dfcc7723f?auto=format&fit=crop&w=800&q=80",
+            altText: "Ripe Fuji Apple Close-up",
+            isPrimary: false,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 3: Gala Apple
+  const galaApple = await prisma.product.create({
+    data: {
+      name: "Organic Royal Gala Crimson Apples",
+      slug: "organic-royal-gala-crimson-apples",
+      sku: "APP-GL-003",
+      shortDescription: "Aromatic, thin-skinned crimson striped Gala apples.",
+      description: "Crisp and aromatic with a delicate floral fragrance. Perfect for fresh snacking, salads, or school lunchboxes. 100% pesticide-residue free.",
+      categoryId: freshApplesCat.id,
+      basePrice: 429,
+      salePrice: 349,
+      costPrice: 180,
+      variety: "Royal Gala",
+      harvestSeason: "Early August",
+      fruitSize: "Medium (75mm)",
+      stockQuantity: 200,
+      isFeatured: false,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?auto=format&fit=crop&w=800&q=80",
+            altText: "Royal Gala Crimson Apples",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 4: Pink Lady Apple
+  const pinkLadyApple = await prisma.product.create({
+    data: {
+      name: "High-Altitude Pink Lady Apples",
+      slug: "high-altitude-pink-lady-apples",
+      sku: "APP-PL-004",
+      shortDescription: "Tangy-sweet fizzy crunch with a distinct pink blush.",
+      description: "The last variety harvested in Kullu Valley, allowing 200+ days of sunshine to build unmatched sugars and vibrant pink coloration.",
+      categoryId: freshApplesCat.id,
+      basePrice: 599,
+      salePrice: 489,
+      costPrice: 250,
+      variety: "Pink Lady",
+      harvestSeason: "November",
+      fruitSize: "Large (80mm)",
+      stockQuantity: 90,
+      isFeatured: true,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?auto=format&fit=crop&w=800&q=80",
+            altText: "High Altitude Pink Lady Apples",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 5: Buckeye Gala Sapling
   const galaTree = await prisma.product.create({
     data: {
       name: "Buckeye Gala Feathered Sapling (M9 T337)",
@@ -214,7 +305,69 @@ async function main() {
     },
   });
 
-  // Rootstock Product
+  // Product 6: Jeromine Red Delicious Spur Tree
+  const jeromineTree = await prisma.product.create({
+    data: {
+      name: "Jeromine Red Delicious Spur Sapling (MM106)",
+      slug: "jeromine-red-delicious-spur-sapling-mm106",
+      sku: "TREE-JR-MM106",
+      shortDescription: "Deep solid-red spur variety with compact branch structure.",
+      description: "Jeromine produces 100% full dark crimson fruit even on interior spurs. Grafted on semi-dwarfing MM106 rootstocks suitable for un-irrigated mountain terrain.",
+      categoryId: appleTreesCat.id,
+      basePrice: 480,
+      salePrice: 399,
+      costPrice: 190,
+      variety: "Jeromine",
+      chillingHours: 850,
+      rootstockType: "MM106",
+      treeHeight: "6 - 7 feet",
+      diseaseResistance: "Scab Resistant",
+      stockQuantity: 350,
+      isFeatured: true,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1590005354167-6da97870c757?auto=format&fit=crop&w=800&q=80",
+            altText: "Jeromine Red Delicious Sapling",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 7: Golden Delicious Pollinator Tree
+  const pollinatorTree = await prisma.product.create({
+    data: {
+      name: "Golden Delicious Pollinator Container Tree",
+      slug: "golden-delicious-pollinator-container-tree",
+      sku: "TREE-GD-POL",
+      shortDescription: "Essential universal pollinator tree with abundant bloom period.",
+      description: "Vital for commercial orchard set. Overlaps with Gala, Honeycrisp, and Red Delicious bloom periods. Container-grown for year-round planting.",
+      categoryId: appleTreesCat.id,
+      basePrice: 520,
+      salePrice: 425,
+      costPrice: 210,
+      variety: "Golden Delicious",
+      chillingHours: 700,
+      rootstockType: "Geneva G11",
+      treeHeight: "4 - 5 feet",
+      diseaseResistance: "Fire Blight Immune",
+      stockQuantity: 180,
+      isFeatured: false,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=800&q=80",
+            altText: "Golden Delicious Pollinator Sapling",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 8: M9 T337 Rootstock
   const m9Rootstock = await prisma.product.create({
     data: {
       name: "M9 T337 Clonal Rootstock (Bundle of 10)",
@@ -243,7 +396,65 @@ async function main() {
     },
   });
 
-  // Gardening Accessory
+  // Product 9: Geneva G11 Rootstock
+  const genevaRootstock = await prisma.product.create({
+    data: {
+      name: "Geneva G11 Resistant Rootstock (Bundle of 10)",
+      slug: "geneva-g11-resistant-rootstock-bundle-10",
+      sku: "RS-G11-10P",
+      shortDescription: "Cornell University bred fire blight & woolly aphid immune rootstock.",
+      description: "Developed at Cornell Geneva station, G11 offers dwarf vigor similar to M9 but eliminates tree mortality from fire blight and replant disease. Excellent winter hardiness.",
+      categoryId: rootstocksCat.id,
+      basePrice: 1450,
+      salePrice: 1199,
+      costPrice: 650,
+      variety: "Geneva G11",
+      rootstockType: "Geneva G11 Dwarf",
+      diseaseResistance: "Fire Blight & Woolly Aphid Immune",
+      stockQuantity: 250,
+      isFeatured: true,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80",
+            altText: "Geneva G11 Clonal Rootstock",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 10: MM106 Rootstock
+  const mm106Rootstock = await prisma.product.create({
+    data: {
+      name: "MM106 Semi-Dwarf Rootstock (Bundle of 10)",
+      slug: "mm106-semi-dwarf-rootstock-bundle-10",
+      sku: "RS-MM106-10P",
+      shortDescription: "Anchor-strong semi-dwarf rootstock for slope and non-irrigated soils.",
+      description: "Produces medium-sized trees requiring minimal staking support. Deep taproot system withstands drought and gravelly hill soils.",
+      categoryId: rootstocksCat.id,
+      basePrice: 1100,
+      salePrice: 899,
+      costPrice: 450,
+      variety: "MM106",
+      rootstockType: "MM106 Semi-Dwarf",
+      diseaseResistance: "Woolly Apple Aphid Resistant",
+      stockQuantity: 400,
+      isFeatured: false,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+            altText: "MM106 Rootstock Liners",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 11: Japanese Secateurs
   const secateur = await prisma.product.create({
     data: {
       name: "Pro-Pruner Japanese Carbon Steel Bypass Secateurs",
@@ -260,7 +471,7 @@ async function main() {
       images: {
         create: [
           {
-            url: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80",
+            url: "https://images.unsplash.com/photo-1585336261026-9136355506c7?auto=format&fit=crop&w=800&q=80",
             altText: "Japanese Steel Pruning Shears",
             isPrimary: true,
           },
@@ -269,7 +480,59 @@ async function main() {
     },
   });
 
-  console.log("✅ Created products and images");
+  // Product 12: Grafting Tape
+  const graftingTape = await prisma.product.create({
+    data: {
+      name: "Professional Parafilm Grafting Tape & Sealing Wax Kit",
+      slug: "professional-parafilm-grafting-tape-kit",
+      sku: "ACC-GRAFT-KIT",
+      shortDescription: "Self-sealing stretchable moisture barrier tape for 98% graft success.",
+      description: "Includes 2 rolls of genuine Parafilm M grafting tape (width 29mm) and 500g organic beeswax sealing ointment. Prevents graft moisture loss while expanding naturally as scions grow.",
+      categoryId: accessoriesCat.id,
+      basePrice: 799,
+      salePrice: 599,
+      costPrice: 250,
+      stockQuantity: 150,
+      isFeatured: false,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=800&q=80",
+            altText: "Parafilm Grafting Tape Kit",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  // Product 13: Trellis Wire
+  const trellisWire = await prisma.product.create({
+    data: {
+      name: "Galvanized High-Tensile Trellis Wire (500m Roll)",
+      slug: "galvanized-high-tensile-trellis-wire-500m",
+      sku: "ACC-TRELLIS-500M",
+      shortDescription: "Heavy gauge class-3 galvanized wire for tall spindle support systems.",
+      description: "Rust-proof 2.5mm high-tensile steel wire designed to support heavy crop loads on M9 high-density trellises. Rated for 15+ years outdoor mountain exposure.",
+      categoryId: accessoriesCat.id,
+      basePrice: 3499,
+      salePrice: 2899,
+      costPrice: 1500,
+      stockQuantity: 60,
+      isFeatured: true,
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80",
+            altText: "Galvanized Trellis Wire Roll",
+            isPrimary: true,
+          },
+        ],
+      },
+    },
+  });
+
+  console.log("✅ Created 13 distinct products with unique images");
 
   // 5. Create Reviews
   await prisma.review.create({
@@ -342,7 +605,7 @@ async function main() {
     },
   });
 
-  console.log("🌱 Database seeding finished successfully!");
+  console.log("🌱 Database seeding finished successfully with 13 unique products!");
 }
 
 main()
