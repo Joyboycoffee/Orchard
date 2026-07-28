@@ -27,8 +27,11 @@ export default function LoginPage() {
       const res = await loginAction({ email, password });
       if (res.success) {
         toast.success(res.message);
-        router.push(callbackUrl);
-        router.refresh();
+        const user = (res.data as any)?.user;
+        const target = callbackUrl !== "/dashboard"
+          ? callbackUrl
+          : (user?.role === "ADMIN" || user?.role === "SUPER_ADMIN" ? "/admin" : "/dashboard");
+        window.location.href = target;
       } else {
         toast.error(res.error || "Login failed");
       }

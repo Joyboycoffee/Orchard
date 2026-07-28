@@ -136,9 +136,9 @@ export function Navbar({ cartItemCount = 0, user }: NavbarProps) {
             {/* User Account / Auth */}
             {user ? (
               <Link href={user.role === "ADMIN" || user.role === "SUPER_ADMIN" ? "/admin" : "/dashboard"}>
-                <Button variant="default" size="sm" className="rounded-xl gap-2 font-medium">
+                <Button variant="default" size="sm" className="rounded-xl gap-2 font-semibold bg-gradient-to-r from-emerald-600 to-primary">
                   <User className="h-4 w-4" />
-                  <span className="hidden sm:inline">{user.fullName.split(" ")[0]}</span>
+                  <span>{user.role === "ADMIN" || user.role === "SUPER_ADMIN" ? "Admin Portal" : user.fullName.split(" ")[0]}</span>
                 </Button>
               </Link>
             ) : (
