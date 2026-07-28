@@ -6,11 +6,11 @@ const protectedCustomerRoutes = ["/dashboard", "/checkout", "/orders"];
 const protectedAdminRoutes = ["/admin"];
 const authRoutes = ["/login", "/register", "/forgot-password"];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
 
-  const user = token ? verifyAccessToken(token) : null;
+  const user = token ? await verifyAccessToken(token) : null;
 
   // 1. Admin route protection
   const isAdminRoute = protectedAdminRoutes.some((route) =>

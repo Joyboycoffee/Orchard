@@ -73,8 +73,8 @@ export async function registerAction(formData: z.infer<typeof RegisterSchema>) {
       fullName: newUser.fullName,
     };
 
-    const accessToken = signAccessToken(tokenPayload);
-    const refreshToken = signRefreshToken(tokenPayload);
+    const accessToken = await signAccessToken(tokenPayload);
+    const refreshToken = await signRefreshToken(tokenPayload);
 
     // Set Cookies
     const cookieStore = await cookies();
@@ -139,8 +139,8 @@ export async function loginAction(formData: z.infer<typeof LoginSchema>) {
       fullName: user.fullName,
     };
 
-    const accessToken = signAccessToken(tokenPayload);
-    const refreshToken = signRefreshToken(tokenPayload);
+    const accessToken = await signAccessToken(tokenPayload);
+    const refreshToken = await signRefreshToken(tokenPayload);
 
     const cookieStore = await cookies();
     cookieStore.set(AUTH_COOKIE_NAME, accessToken, {

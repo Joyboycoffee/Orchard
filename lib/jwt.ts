@@ -1,9 +1,12 @@
-import jwt from "jsonwebtoken";
+import { SignJWT, jwtVerify } from "jose";
 import { Role } from "@prisma/client";
 
-const JWT_SECRET = process.env.JWT_SECRET || "orchard_super_secret_jwt_key_32chars_min";
-const JWT_REFRESH_SECRET =
-  process.env.JWT_REFRESH_SECRET || "orchard_super_secret_refresh_key_32chars_min";
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || "orchard_super_secret_jwt_key_32chars_min"
+);
+const JWT_REFRESH_SECRET = new TextEncoder().encode(
+  process.env.JWT_REFRESH_SECRET || "orchard_super_secret_refresh_key_32chars_min"
+);
 
 export interface TokenPayload {
   userId: string;
@@ -13,36 +16,66 @@ export interface TokenPayload {
 }
 
 /**
- * Sign an Access Token (valid for 1 day)
+ * Sign an Access Token (valid for 1 day) - Edge & Node compatible
  */
-export function signAccessToken(payload: TokenPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
+export async function signAccessToken(payload: TokenPayload): Promise<string> {
+  return new SignJWT({
+    userId: payload.userId,
+    email: payload.email,
+    role: payload.role,
+    fullName: payload.fullName,
+  })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("1d")
+    .setIssuedAt()
+    .sign(JWT_SECRET);
 }
 
 /**
- * Sign a Refresh Token (valid for 7 days)
+ * Sign a Refresh Token (valid for 7 days) - Edge & Node compatible
  */
-export function signRefreshToken(payload: TokenPayload): string {
-  return jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: "7d" });
+export async function signRefreshToken(payload: TokenPayload): Promise<string> {
+  return new SignJWT({
+    userId: payload.userId,
+    email: payload.email,
+    role: payload.role,
+    fullName: payload.fullName,
+  })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("7d")
+    .setIssuedAt()
+    .sign(JWT_REFRESH_SECRET);
 }
 
 /**
- * Verify Access Token
+ * Verify Access Token (Edge & Node compatible)
  */
-export function verifyAccessToken(token: string): TokenPayload | null {
+export async function verifyAccessToken(token: string): Promise<TokenPayload | null> {
   try {
-    return jwt.verify(token, JWT_SECRET) as TokenPayload;
+    const { payload } = await jwtVerify(token, JWT_SECRET);
+    return {
+      userId: payload.userId as string,
+      email: payload.email as string,
+      role: payload.role as Role,
+      fullName: payload.fullName as string,
+    };
   } catch {
     return null;
   }
 }
 
 /**
- * Verify Refresh Token
+ * Verify Refresh Token (Edge & Node compatible)
  */
-export function verifyRefreshToken(token: string): TokenPayload | null {
+export async function verifyRefreshToken(token: string): Promise<TokenPayload | null> {
   try {
-    return jwt.verify(token, JWT_REFRESH_SECRET) as TokenPayload;
+    const { payload } = await jwtVerify(token, JWT_REFRESH_SECRET);
+    return {
+      userId: payload.userId as string,
+      email: payload.email as string,
+      role: payload.role as Role,
+      fullName: payload.fullName as string,
+    };
   } catch {
     return null;
   }
