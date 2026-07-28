@@ -134,7 +134,7 @@ export function Footer() {
 
         {/* Bottom Rights */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-4">
-          <p>© {new Date().getFullYear()} Orchard E-Commerce Platform. All rights reserved. BCA Final Project.</p>
+          <p>© {new Date().getFullYear()} Orchard E-Commerce Platform. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
             <Link href="/terms" className="hover:underline">Terms of Service</Link>
