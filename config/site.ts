@@ -74,7 +74,7 @@ export const siteConfig = {
     },
     {
       title: "Knowledge Hub",
-      href: "/guides",
+      href: "/rootstock-library",
       description: "Expert guides on rootstock selection, canopy training, and soil care.",
       children: [
         { title: "Rootstock Library", href: "/rootstock-library" },
