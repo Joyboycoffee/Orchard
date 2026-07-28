@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 99%;
+    --foreground: 155 40% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 155 40% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 155 40% 8%;
+
+    --primary: 142 72% 29%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 140 20% 95%;
+    --secondary-foreground: 155 40% 12%;
+
+    --muted: 140 10% 96%;
+    --muted-foreground: 155 10% 40%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 354 78% 54%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 140 15% 90%;
+    --input: 140 15% 90%;
+    --ring: 142 72% 29%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 155 45% 4%;
+    --foreground: 140 20% 96%;
+
+    --card: 155 35% 7%;
+    --card-foreground: 140 20% 96%;
+
+    --popover: 155 35% 7%;
+    --popover-foreground: 140 20% 96%;
+
+    --primary: 142 65% 42%;
+    --primary-foreground: 155 45% 4%;
+
+    --secondary: 155 25% 12%;
+    --secondary-foreground: 140 20% 96%;
+
+    --muted: 155 20% 14%;
+    --muted-foreground: 140 10% 65%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 155 45% 4%;
+
+    --destructive: 354 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 155 20% 16%;
+    --input: 155 20% 16%;
+    --ring: 142 65% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/20 selection:text-primary;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Glassmorphism Styles */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark .glass-panel {
+  background: rgba(12, 28, 18, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(229, 231, 235, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .glass-card {
+  background: rgba(18, 38, 25, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -15px rgba(22, 163, 74, 0.15);
+  border-color: rgba(22, 163, 74, 0.3);
+}
+
+.glass-navbar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-navbar {
+  background: rgba(8, 18, 12, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Smooth Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
+
+/* Skeleton Shimmer Loading */
+.skeleton-pulse {
+  background: linear-gradient(
+    90deg,
+    rgba(229, 231, 235, 0.4) 0%,
+    rgba(243, 244, 246, 0.8) 50%,
+    rgba(229, 231, 235, 0.4) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+.dark .skeleton-pulse {
+  background: linear-gradient(
+    90deg,
+    rgba(30, 41, 35, 0.4) 0%,
+    rgba(45, 60, 50, 0.8) 50%,
+    rgba(30, 41, 35, 0.4) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
