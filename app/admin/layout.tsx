@@ -1,15 +1,16 @@
-import { requireAdmin } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { redirect } from "next/navigation";
+import { Role } from "@prisma/client";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  try {
-    await requireAdmin();
-  } catch {
+  const user = await getCurrentUser();
+
+  if (!user || (user.role !== Role.ADMIN && user.role !== Role.SUPER_ADMIN)) {
     redirect("/login?callbackUrl=/admin");
   }
 

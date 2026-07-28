@@ -28,10 +28,11 @@ export function AddToCartButton({ productId, stock }: AddToCartButtonProps) {
       if (res.success) {
         toast.success("Added to shopping cart!");
       } else {
-        toast.error(res.error || "Please sign in to add items to cart.");
+        toast.info("Please sign in or create an account to add items to cart.");
+        router.push("/login?callbackUrl=/cart");
       }
     } catch {
-      toast.error("Failed to add to cart");
+      router.push("/login?callbackUrl=/cart");
     } finally {
       setLoading(false);
     }
@@ -46,10 +47,11 @@ export function AddToCartButton({ productId, stock }: AddToCartButtonProps) {
         toast.success("Proceeding to checkout...");
         router.push("/checkout");
       } else {
-        toast.error(res.error || "Please sign in to proceed to checkout.");
+        toast.info("Please sign in or create an account to continue checkout.");
+        router.push("/login?callbackUrl=/checkout");
       }
     } catch {
-      toast.error("Buy Now action failed");
+      router.push("/login?callbackUrl=/checkout");
     } finally {
       setBuyNowLoading(false);
     }
@@ -62,10 +64,11 @@ export function AddToCartButton({ productId, stock }: AddToCartButtonProps) {
       if (res.success) {
         toast.success(res.message);
       } else {
-        toast.error(res.error || "Please sign in to modify wishlist.");
+        toast.info("Please sign in to save items to your wishlist.");
+        router.push("/login?callbackUrl=/dashboard?tab=wishlist");
       }
     } catch {
-      toast.error("Wishlist action failed");
+      router.push("/login?callbackUrl=/dashboard?tab=wishlist");
     } finally {
       setWishlistLoading(false);
     }
