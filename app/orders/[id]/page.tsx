@@ -19,7 +19,7 @@ export default async function OrderDetailPage({
     notFound();
   }
 
-  const order = res.data;
+  const order: any = res.data;
 
   return (
     <div className="mx-auto max-w-4xl px-4 lg:px-8 py-12 space-y-8">

@@ -19,7 +19,7 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  const product = res.data;
+  const product: any = res.data;
   const primaryImage =
     product.images.find((i: any) => i.isPrimary)?.url ||
     product.images[0]?.url ||

@@ -6,7 +6,7 @@ import { OrderStatusControls } from "./order-status-controls";
 
 export default async function AdminOrdersPage() {
   const res = await getAdminOrdersAction();
-  const orders = res.data || [];
+  const orders: any[] = Array.isArray(res.data) ? res.data : [];
 
   return (
     <div className="space-y-6">

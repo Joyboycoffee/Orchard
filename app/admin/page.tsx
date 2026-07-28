@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default async function AdminDashboardPage() {
   const statsRes = await getAdminDashboardStatsAction();
-  const stats = statsRes.data || {
+  const stats: any = statsRes.data || {
     totalRevenue: 0,
     totalOrders: 0,
     totalCustomers: 0,

@@ -24,7 +24,8 @@ export default async function ProductsPage({
     limit: 20,
   });
 
-  const products = res.data?.products || [];
+  const resData: any = res.data;
+  const products = resData?.products || [];
 
   return (
     <div className="mx-auto max-w-7xl px-4 lg:px-8 py-10 space-y-8">

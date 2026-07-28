@@ -18,7 +18,8 @@ import {
 
 export default async function HomePage() {
   const featuredRes = await getProductsAction({ limit: 8, featuredOnly: true });
-  const products = featuredRes.data?.products || [];
+  const featuredData: any = featuredRes.data;
+  const products = featuredData?.products || [];
 
   return (
     <div className="space-y-16 pb-12">

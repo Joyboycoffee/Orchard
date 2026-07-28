@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/utils";
 
 export default async function AuditLogsPage() {
   const res = await getAdminAuditLogsAction();
-  const logs = res.data || [];
+  const logs: any[] = Array.isArray(res.data) ? res.data : [];
 
   return (
     <div className="space-y-6">

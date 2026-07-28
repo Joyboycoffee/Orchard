@@ -19,8 +19,8 @@ export default async function DashboardPage() {
     getWishlistAction(),
   ]);
 
-  const orders = ordersRes.data || [];
-  const wishlistItems = wishlistRes.data || [];
+  const orders: any[] = Array.isArray(ordersRes.data) ? ordersRes.data : [];
+  const wishlistItems: any[] = Array.isArray(wishlistRes.data) ? wishlistRes.data : [];
 
   return (
     <div className="mx-auto max-w-7xl px-4 lg:px-8 py-10 space-y-8">

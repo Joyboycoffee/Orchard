@@ -8,11 +8,13 @@ export default async function CheckoutPage() {
   if (!user) redirect("/login?callbackUrl=/checkout");
 
   const cartRes = await getCartAction();
-  if (!cartRes.success || !cartRes.data || cartRes.data.items.length === 0) {
+  const cartData: any = cartRes.data;
+
+  if (!cartRes.success || !cartData || !cartData.items || cartData.items.length === 0) {
     redirect("/cart");
   }
 
-  const { items, subtotal } = cartRes.data;
+  const { items, subtotal } = cartData;
 
   return (
     <div className="mx-auto max-w-7xl px-4 lg:px-8 py-10 space-y-8">

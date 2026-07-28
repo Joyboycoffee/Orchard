@@ -10,8 +10,9 @@ import { CartItemControls } from "./cart-item-controls";
 
 export default async function CartPage() {
   const res = await getCartAction();
+  const cartData: any = res.data;
 
-  if (!res.success || !res.data || res.data.items.length === 0) {
+  if (!res.success || !cartData || !cartData.items || cartData.items.length === 0) {
     return (
       <div className="mx-auto max-w-7xl px-4 lg:px-8 py-20 text-center space-y-6">
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-muted text-muted-foreground">
@@ -32,7 +33,7 @@ export default async function CartPage() {
     );
   }
 
-  const { items, subtotal } = res.data;
+  const { items, subtotal } = cartData;
   const shippingFee = subtotal >= 1999 ? 0 : 150;
   const grandTotal = subtotal + shippingFee;
 

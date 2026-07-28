@@ -41,9 +41,10 @@ export function CheckoutForm({ user, items, subtotal }: CheckoutFormProps) {
         paymentMethod,
       });
 
-      if (res.success && res.data) {
+      const orderData: any = res.data;
+      if (res.success && orderData) {
         toast.success("Order placed successfully!");
-        router.push(`/orders/${res.data.id}`);
+        router.push(`/orders/${orderData.id}`);
       } else {
         toast.error(res.error || "Failed to place order.");
       }

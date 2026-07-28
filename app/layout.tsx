@@ -52,8 +52,9 @@ export default async function RootLayout({
 
   if (user) {
     const cartRes = await getCartAction();
-    if (cartRes.success && cartRes.data) {
-      cartCount = cartRes.data.itemCount || 0;
+    const cartData: any = cartRes.data;
+    if (cartRes.success && cartData) {
+      cartCount = cartData.itemCount || 0;
     }
   }
 
