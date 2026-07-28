@@ -40,8 +40,8 @@ Orchard is a full-stack, enterprise-grade e-commerce application built for comme
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/orchard-bca.git
-   cd orchard-bca
+   git clone https://github.com/joyboycoffee/orchard.git
+   cd Orchard
    ```
 
 2. Install dependencies:

@@ -31,7 +31,7 @@ You can run PostgreSQL either via Hostinger Managed PostgreSQL or through Docker
 
 ### Option A: Running via Docker Compose
 ```bash
-cd /var/www/orchard-bca
+cd /var/www/Orchard
 docker-compose -f docker/docker-compose.yml up -d postgres redis
 ```
 
@@ -48,8 +48,8 @@ DATABASE_URL="postgresql://username:password@hostinger_pg_host:5432/orchard_db?s
 1. Clone codebase and install production dependencies:
    ```bash
    cd /var/www
-   git clone https://github.com/your-username/orchard-bca.git orchard
-   cd orchard
+   git clone https://github.com/joyboycoffee/orchard.git Orchard
+   cd Orchard
    npm ci
    ```
 
