@@ -142,13 +142,23 @@ img {
 .logo-icon {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  color: #ffffff;
-  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-sm);
+}
+
+.logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(12, 59, 46, 0.15));
+}
+
+.footer-logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
 }
 
 .nav-links {
