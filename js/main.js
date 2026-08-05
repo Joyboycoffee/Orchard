@@ -217,10 +217,35 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
+// Scroll Reveal Intersection Observer Engine
+function initScrollReveal() {
+  const targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .feature-card, .product-card, .section-header, .hero-content, .hero-image-wrapper, .contact-card');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -40px 0px',
+    threshold: 0.1
+  });
+
+  targets.forEach((el, index) => {
+    if (!el.classList.contains('reveal') && !el.classList.contains('reveal-left') && !el.classList.contains('reveal-right') && !el.classList.contains('reveal-scale')) {
+      el.classList.add('reveal');
+    }
+    observer.observe(el);
+  });
+}
+
 // DOM Loaded Event Handlers
 document.addEventListener('DOMContentLoaded', () => {
   initLocalStorage();
   updateCartBadge();
+  initScrollReveal();
 
   // Mobile Navigation Toggle
   const mobileToggle = document.querySelector('.mobile-toggle');

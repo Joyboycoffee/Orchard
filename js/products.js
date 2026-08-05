@@ -57,6 +57,10 @@ function renderProducts() {
       </div>
     </div>
   `).join('');
+
+  if (typeof initScrollReveal === 'function') {
+    setTimeout(initScrollReveal, 50);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
