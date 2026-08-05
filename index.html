@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orchard — Premium High-Altitude Fresh Apples & Saplings</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍏</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    🌿 Fresh 2026 Harvest Pre-Orders Open! Use code <span>WELCOME10</span> for 10% OFF Free Delivery on Orders Over ₹1,999
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🍏</div>
+        <span>Orchard</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="products.html" class="nav-link">Products</a></li>
+        <li><a href="cart.html" class="nav-link">Cart</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-icon-btn">
+          <span>🛒 Cart</span>
+          <span class="cart-badge">0</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>🌱 100% Handpicked Organic Produce</span>
+        </div>
+        <h1 class="hero-title">
+          Taste the Peak Crunch of <span>Himalayan Orchards</span>
+        </h1>
+        <p class="hero-subtitle">
+          Directly harvested from 7,500 ft Kullu Valley elevation. Premium Honeycrisp apples, virus-free dwarfing M9 rootstocks, and feathered saplings.
+        </p>
+        <div class="hero-btns">
+          <a href="products.html" class="btn btn-primary">
+            <span>Explore Catalog 🍏</span>
+          </a>
+          <a href="contact.html" class="btn btn-secondary">
+            <span>Bulk Nursery Inquiry</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper">
+        <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80" alt="Fresh Himalayan Honeycrisp Apples Crate" class="hero-img" />
+        <div class="hero-float-card">
+          <div class="hero-float-icon">🌟</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: var(--primary-dark);">4.9 Rating</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">From 1,200+ Orchard Growers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features Highlight -->
+  <section class="features">
+    <div class="container features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏔️</div>
+        <h3 class="feature-title">High-Altitude Grown</h3>
+        <p class="feature-desc">Cultivated at 7,500+ feet altitude for maximum sugar density and crisp texture.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3 class="feature-title">Cold-Chain Express</h3>
+        <p class="feature-desc">Temperature-controlled pulp-molded packaging guarantees farm-fresh delivery.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📜</div>
+        <h3 class="feature-title">Virus-Indexed Stocks</h3>
+        <p class="feature-desc">Certified Dutch M9 T337 & Geneva clonal rootstocks for commercial orchards.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3 class="feature-title">100% Growth Guarantee</h3>
+        <p class="feature-desc">All nursery saplings come with replacement guarantee for healthy spring sprouting.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Showcase -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Handpicked Selection</span>
+        <h2 class="section-title">Featured Orchard Harvest</h2>
+        <p class="section-subtitle">Discover our most popular fresh crisp apples, saplings, and nursery accessories.</p>
+      </div>
+
+      <div class="products-grid" id="products-grid-container">
+        <!-- Rendered dynamically via js/products.js -->
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="products.html" class="btn btn-primary">
+          <span>View All Products →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <span style="font-size: 1.8rem;">🍏</span> Orchard E-Commerce
+          </div>
+          <p class="footer-desc">
+            Premium high-density apple nursery & fresh produce platform. Delivering nature's finest harvest directly to your doorstep.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Product Catalog</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html">Fresh Apples</a></li>
+            <li><a href="products.html">Apple Saplings</a></li>
+            <li><a href="products.html">Clonal Rootstocks</a></li>
+            <li><a href="products.html">Pruning Accessories</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Project Info</h4>
+          <p style="font-size: 0.85rem; color: var(--primary-light); opacity: 0.8; line-height: 1.6;">
+            BCA 5th Semester Final Project<br>
+            Tech: Vanilla HTML5, CSS3, JS & LocalStorage<br>
+            Designed for Hostinger Static Hosting
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        &copy; 2026 Orchard E-Commerce Platform. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>
