@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orchard E-Commerce — Project Report & Documentation</title>
+  <link rel="icon" type="image/png" href="images/logo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-dark: #0c3b2e;
+      --primary: #10b981;
+      --primary-bg: #ecfdf5;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #cbd5e1;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    body { background: #f8fafc; color: var(--text-main); line-height: 1.6; padding: 2rem; }
+    
+    .report-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-color);
+    }
+    
+    .print-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: var(--primary-dark);
+      color: #ffffff;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      z-index: 100;
+      transition: all 0.2s;
+    }
+    .print-btn:hover { background: var(--primary); transform: translateY(-2px); }
+    
+    .header { text-align: center; border-bottom: 3px double var(--border-color); padding-bottom: 2rem; margin-bottom: 2.5rem; }
+    .logo-img { width: 64px; height: 64px; margin-bottom: 0.75rem; }
+    .title { font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); }
+    .subtitle { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: 0.25rem; }
+    .meta { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; }
+    
+    h2 { font-size: 1.4rem; font-weight: 800; color: var(--primary-dark); margin: 2rem 0 1rem 0; padding-bottom: 0.4rem; border-bottom: 2px solid var(--primary-bg); }
+    h3 { font-size: 1.1rem; font-weight: 700; color: var(--primary-dark); margin: 1.25rem 0 0.5rem 0; }
+    p, li { font-size: 0.95rem; color: #334155; margin-bottom: 0.75rem; }
+    ul { padding-left: 1.5rem; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; }
+    th, td { padding: 0.75rem 1rem; border: 1px solid var(--border-color); text-align: left; font-size: 0.875rem; }
+    th { background: var(--primary-bg); color: var(--primary-dark); font-weight: 800; }
+    
+    pre { background: #0f172a; color: #f8fafc; padding: 1.25rem; border-radius: 8px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 1rem 0; }
+    
+    @media print {
+      .print-btn { display: none; }
+      body { background: #ffffff; padding: 0; }
+      .report-container { box-shadow: none; border: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Save as PDF / Print Report</button>
+
+  <div class="report-container">
+    
+    <div class="header">
+      <img src="images/logo_transparent.png" alt="Orchard Logo" class="logo-img" />
+      <h1 class="title">ORCHARD E-COMMERCE PLATFORM</h1>
+      <div class="subtitle">Complete Technical Project Report & Specification Document</div>
+      <div class="meta">
+        Academic Submission: BCA 5th Semester | Technology Stack: HTML5, CSS3, Vanilla JS & LocalStorage API
+      </div>
+    </div>
+
+    <h2>1. Executive Summary</h2>
+    <p>
+      <strong>Orchard</strong> is an e-commerce web application specifically crafted for high-altitude fresh apples, virus-free clonal rootstocks, saplings, and nursery tools. Designed with zero external frameworks or server databases, the platform achieves complete client-side data management using native <code>LocalStorage</code> and <code>SessionStorage</code> browser APIs.
+    </p>
+
+    <h2>2. Technology Stack</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology Used</th>
+          <th>Purpose & Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Frontend Structure</strong></td>
+          <td>HTML5</td>
+          <td>Semantic layout (header, nav, main, section, footer)</td>
+        </tr>
+        <tr>
+          <td><strong>Design & Styling</strong></td>
+          <td>CSS3 (Vanilla)</td>
+          <td>CSS Variables, Flexbox, Grid, Glassmorphism, Micro-animations</td>
+        </tr>
+        <tr>
+          <td><strong>Logic & Interactivity</strong></td>
+          <td>JavaScript (ES6+)</td>
+          <td>DOM manipulators, state handlers, toast notification system</td>
+        </tr>
+        <tr>
+          <td><strong>Data Storage</strong></td>
+          <td>Web Storage API</td>
+          <td><code>localStorage</code> (Products, Cart, Messages), <code>sessionStorage</code> (Admin Auth)</td>
+        </tr>
+        <tr>
+          <td><strong>Scroll Animations</strong></td>
+          <td>IntersectionObserver API</td>
+          <td>Hardware-accelerated viewport scroll reveal effects</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Application Structure</h2>
+    <pre>
+Orchard/
+├── index.html              # Home Page (Hero, Bento Highlights, Featured Catalog)
+├── products.html           # Catalog Page (Live Category Pills, Search Bar)
+├── cart.html               # Shopping Cart (Stepper, Coupon Discounts, Checkout Modal)
+├── contact.html            # Contact Page (Nursery Details & Inquiry Form)
+├── admin.html              # Hidden Admin Suite (Auth, Product CRUD, Message Inbox)
+├── project_report.html     # Printable HTML Report (Save to PDF)
+├── PROJECT_DOCUMENTATION.md# Complete Technical Specification File
+├── css/style.css           # Master Styling & Animation System
+└── js/
+    ├── main.js             # Storage Seed, Cart Badge Sync & Scroll Observer
+    ├── products.js         # Catalog Rendering, Category & Search Filters
+    ├── cart.js             # Cart Management, Coupon Logic & Checkout Simulation
+    ├── contact.js          # Inquiry Form Storage Handler
+    └── admin.js            # Admin Auth Gateway & Product CRUD Handlers
+    </pre>
+
+    <h2>4. Key Page Functionalities</h2>
+    <h3>4.1 Home Page (index.html)</h3>
+    <p>Includes floating hero image animation, call-to-action buttons, trust badges, and an elevated Bento Grid highlights section (*High-Altitude Grown, Cold-Chain Express, Virus-Indexed Stocks, 100% Growth Guarantee*).</p>
+
+    <h3>4.2 Products Catalog (products.html)</h3>
+    <p>Features real-time category filtering (*All Products, Fresh Apples, Apple Saplings, Rootstocks, Accessories*), instant search bar filtering, and automatic fallback image handling.</p>
+
+    <h3>4.3 Cart & Checkout (cart.html)</h3>
+    <p>Provides an interactive item table with quantity steppers (+/-), single-click deletion, promo codes (<code>WELCOME10</code> for 10% OFF), and a complete checkout modal collecting customer details.</p>
+
+    <h3>4.4 Contact Page (contact.html)</h3>
+    <p>Captures user inquiries and persists them into <code>localStorage.getItem('orchard_messages')</code> with exact timestamps.</p>
+
+    <h3>4.5 Hidden Admin Portal (admin.html)</h3>
+    <p>Accessible only by typing <code>/admin.html</code>. Authenticates with credentials (<code>admin</code> / <code>admin123</code>) and unlocks full Product CRUD (Add/Edit/Delete) and customer message inbox viewing.</p>
+
+    <h2>5. LocalStorage Data Schema</h2>
+    <pre>
+// Product Item Schema
+{
+  "id": "prod-1",
+  "name": "Kullu Royal Honeycrisp",
+  "category": "fresh-apples",
+  "price": 399,
+  "originalPrice": 499,
+  "stock": 120,
+  "badge": "Best Seller",
+  "image": "https://images.unsplash.com/...",
+  "description": "Ultra-crisp high-altitude Honeycrisp harvested in Kullu Valley."
+}
+    </pre>
+
+    <h2>6. Vercel & Static Hosting Guide</h2>
+    <p>To deploy on Vercel: Set Framework Preset to <strong>Other</strong>, enable <strong>Override</strong> on Build Command and leave it completely <strong>EMPTY</strong>. Save and click Redeploy for instant 2-second publishing!</p>
+
+    <div style="text-align: center; margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+      Project Orchard &copy; 2026. BCA 5th Semester Final Project Submission.
+    </div>
+
+  </div>
+
+</body>
+</html>
