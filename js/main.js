@@ -109,7 +109,7 @@ const DEFAULT_PRODUCTS = [
     stock: 60,
     badge: "Orchard Tool",
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1592417817098-8f3d6ef23a28?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=600&q=80",
     description: "Razor-sharp Japanese high-carbon SK5 steel blades for clean precision pruning up to 25mm."
   }
 ];
@@ -117,9 +117,9 @@ const DEFAULT_PRODUCTS = [
 // Initialize LocalStorage Data on Load
 function initLocalStorage() {
   const currentVer = localStorage.getItem('orchard_products_version');
-  if (!currentVer || currentVer !== 'v2' || !localStorage.getItem('orchard_products')) {
+  if (!currentVer || currentVer !== 'v4' || !localStorage.getItem('orchard_products')) {
     localStorage.setItem('orchard_products', JSON.stringify(DEFAULT_PRODUCTS));
-    localStorage.setItem('orchard_products_version', 'v2');
+    localStorage.setItem('orchard_products_version', 'v4');
   }
   if (!localStorage.getItem('orchard_cart')) {
     localStorage.setItem('orchard_cart', JSON.stringify([]));
