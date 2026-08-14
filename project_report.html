@@ -169,9 +169,27 @@ Orchard/
     <h3>4.5 Hidden Admin Portal (admin.html)</h3>
     <p>Accessible only by typing <code>/admin.html</code>. Authenticates with credentials (<code>admin</code> / <code>admin123</code>) and unlocks full Product CRUD (Add/Edit/Delete) and customer message inbox viewing.</p>
 
-    <h2>5. Database Architecture & Schema</h2>
+    <h2>5. Database Architecture & NoSQL Schema</h2>
+    <p>
+      The application utilizes a Document-Based NoSQL Database Model structured as JSON collections. Unlike rigid relational databases (SQL), NoSQL JSON documents allow flexible item attributes suitable for dynamic e-commerce catalogs.
+    </p>
+
+    <h3>5.1 Key Database Concepts</h3>
+    <ul>
+      <li><strong>JSON (JavaScript Object Notation):</strong> Lightweight, human-readable data format structured as key:value pairs.</li>
+      <li><strong>NoSQL Document Database:</strong> Flexible non-relational database model that stores items in document collections instead of strict SQL tables.</li>
+      <li><strong>CRUD Operations:</strong>
+        <ul>
+          <li><strong>Create:</strong> Insert new product documents into catalog.</li>
+          <li><strong>Read:</strong> Query and display products or customer inquiry messages.</li>
+          <li><strong>Update:</strong> Edit product prices, stock units, or imagery.</li>
+          <li><strong>Delete:</strong> Remove product entries from the database catalog.</li>
+        </ul>
+      </li>
+    </ul>
+
     <pre>
-// Product Schema
+// Product Document Collection Schema (orchard_products)
 {
   "id": "prod-1",
   "name": "Kullu Royal Honeycrisp",
