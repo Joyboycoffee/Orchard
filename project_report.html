@@ -85,13 +85,13 @@
       <h1 class="title">ORCHARD E-COMMERCE PLATFORM</h1>
       <div class="subtitle">Complete Technical Project Report & Specification Document</div>
       <div class="meta">
-        Academic Submission: BCA 5th Semester | Technology Stack: HTML5, CSS3, Vanilla JS & LocalStorage API
+        Academic Submission: BCA 5th Semester | Technology Stack: HTML5, CSS3, ES6+ JS & Database Store
       </div>
     </div>
 
     <h2>1. Executive Summary</h2>
     <p>
-      <strong>Orchard</strong> is an e-commerce web application specifically crafted for high-altitude fresh apples, virus-free clonal rootstocks, saplings, and nursery tools. Designed with zero external frameworks or server databases, the platform achieves complete client-side data management using native <code>LocalStorage</code> and <code>SessionStorage</code> browser APIs.
+      <strong>Orchard</strong> is an e-commerce web application specifically crafted for high-altitude fresh apples, virus-free clonal rootstocks, saplings, and nursery tools. Designed using a clean 4-tier web architecture, the platform manages products, cart sessions, customer inquiries, and administrative CRUD workflows through a structured Database Layer.
     </p>
 
     <h2>2. Technology Stack</h2>
@@ -120,9 +120,9 @@
           <td>DOM manipulators, state handlers, toast notification system</td>
         </tr>
         <tr>
-          <td><strong>Data Storage</strong></td>
-          <td>Web Storage API</td>
-          <td><code>localStorage</code> (Products, Cart, Messages), <code>sessionStorage</code> (Admin Auth)</td>
+          <td><strong>Database Layer</strong></td>
+          <td>Database Storage Engine</td>
+          <td>Data persistence for Products, Cart Sessions, Messages, and Admin Auth</td>
         </tr>
         <tr>
           <td><strong>Scroll Animations</strong></td>
@@ -141,10 +141,12 @@ Orchard/
 ├── contact.html            # Contact Page (Nursery Details & Inquiry Form)
 ├── admin.html              # Hidden Admin Suite (Auth, Product CRUD, Message Inbox)
 ├── project_report.html     # Printable HTML Report (Save to PDF)
+├── PRESENTATION_SKIT_AND_GUIDE.md # Presentation Script & Viva Guide
+├── presentation_deck.html  # Visual Slide Deck for Project Presentation
 ├── PROJECT_DOCUMENTATION.md# Complete Technical Specification File
 ├── css/style.css           # Master Styling & Animation System
 └── js/
-    ├── main.js             # Storage Seed, Cart Badge Sync & Scroll Observer
+    ├── main.js             # Core Initializer, Cart Badge Sync & Scroll Observer
     ├── products.js         # Catalog Rendering, Category & Search Filters
     ├── cart.js             # Cart Management, Coupon Logic & Checkout Simulation
     ├── contact.js          # Inquiry Form Storage Handler
@@ -162,14 +164,14 @@ Orchard/
     <p>Provides an interactive item table with quantity steppers (+/-), single-click deletion, promo codes (<code>WELCOME10</code> for 10% OFF), and a complete checkout modal collecting customer details.</p>
 
     <h3>4.4 Contact Page (contact.html)</h3>
-    <p>Captures user inquiries and persists them into <code>localStorage.getItem('orchard_messages')</code> with exact timestamps.</p>
+    <p>Captures user inquiries and stores them in the customer messages database with exact timestamps.</p>
 
     <h3>4.5 Hidden Admin Portal (admin.html)</h3>
     <p>Accessible only by typing <code>/admin.html</code>. Authenticates with credentials (<code>admin</code> / <code>admin123</code>) and unlocks full Product CRUD (Add/Edit/Delete) and customer message inbox viewing.</p>
 
-    <h2>5. LocalStorage Data Schema</h2>
+    <h2>5. Database Architecture & Schema</h2>
     <pre>
-// Product Item Schema
+// Product Schema
 {
   "id": "prod-1",
   "name": "Kullu Royal Honeycrisp",

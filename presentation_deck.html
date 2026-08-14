@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orchard Project — Simple Presentation Deck & Skit</title>
+  <title>Orchard Project — Presentation Deck & Skit</title>
   <link rel="icon" type="image/png" href="images/logo_transparent.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,22 +72,22 @@
 
     .analogy-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1.25rem;
       margin-top: 1.5rem;
     }
 
     .analogy-box {
       background: var(--bg-main);
       border-radius: 14px;
-      padding: 1.5rem;
+      padding: 1.25rem;
       border: 1px solid var(--border-color);
       text-align: center;
     }
 
-    .analogy-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-    .analogy-name { font-weight: 800; font-size: 1.2rem; color: var(--primary-dark); margin-bottom: 0.4rem; }
-    .analogy-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+    .analogy-icon { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .analogy-name { font-weight: 800; font-size: 1.1rem; color: var(--primary-dark); margin-bottom: 0.3rem; }
+    .analogy-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
 
     .script-bubble {
       background: var(--primary-bg);
@@ -115,7 +115,7 @@
   <div class="deck-header">
     <img src="images/logo_transparent.png" alt="Orchard Logo" style="width: 56px; height: 56px; margin-bottom: 0.5rem;" />
     <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--primary-dark);">ORCHARD PROJECT PRESENTATION DECK</h1>
-    <p style="color: var(--text-muted); font-size: 0.95rem;">Ultra-Simple Plain Language Guide & Skit Script</p>
+    <p style="color: var(--text-muted); font-size: 0.95rem;">Clean Presentation Deck & Viva Script</p>
   </div>
 
   <!-- SLIDE 1 -->
@@ -124,65 +124,72 @@
     <h2 class="slide-title">1. Introduction to Orchard</h2>
     <div class="slide-subtitle">What is this project about?</div>
     <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-dark);">
-      <strong>Orchard</strong> is an online store for buying fresh Himalayan apples, apple trees (saplings), rootstocks, and garden tools. It looks and works like a real commercial app, built using simple web technologies without complex database servers!
+      <strong>Orchard</strong> is a modern e-commerce web application for purchasing fresh Himalayan apples, high-density nursery saplings, clonal rootstocks, and pruning tools.
     </p>
 
     <div class="script-bubble">
-      <strong>🗣️ What to say:</strong> "Hello! Today I am presenting Orchard, a simple e-commerce website for buying fresh apples and nursery saplings. It is designed to be super fast, clean, and beginner-friendly."
+      <strong>🗣️ What to say:</strong> "Hello! Today I am presenting Orchard, an e-commerce platform for buying fresh apples and nursery saplings. It is designed to be fast, modern, and user-friendly."
     </div>
   </div>
 
   <!-- SLIDE 2 -->
   <div class="slide-card">
     <span class="slide-num">SLIDE 02</span>
-    <h2 class="slide-title">2. The 3 Core Building Blocks (HTML, CSS & JS)</h2>
-    <div class="slide-subtitle">How do websites get built?</div>
+    <h2 class="slide-title">2. Core Technology Stack</h2>
+    <div class="slide-subtitle">Architecture Overview</div>
 
     <div class="analogy-grid">
       <div class="analogy-box">
         <div class="analogy-icon">🦴</div>
-        <div class="analogy-name">HTML</div>
-        <div class="analogy-desc"><strong>The Skeleton</strong><br>Holds the text, headings, pictures, and buttons.</div>
+        <div class="analogy-name">HTML5</div>
+        <div class="analogy-desc"><strong>Structure</strong><br>Holds headings, text, pictures, and buttons.</div>
       </div>
 
       <div class="analogy-box">
         <div class="analogy-icon">🎨</div>
-        <div class="analogy-name">CSS</div>
-        <div class="analogy-desc"><strong>The Clothes</strong><br>Adds colors, rounded card corners, layout grid, and hover effects.</div>
+        <div class="analogy-name">CSS3</div>
+        <div class="analogy-desc"><strong>Design</strong><br>Adds green styling, card layouts, and hover effects.</div>
       </div>
 
       <div class="analogy-box">
         <div class="analogy-icon">🧠</div>
         <div class="analogy-name">JavaScript</div>
-        <div class="analogy-desc"><strong>The Brain</strong><br>Calculates cart bills, filters products, saves user items, and moves objects.</div>
+        <div class="analogy-desc"><strong>Logic</strong><br>Calculates cart totals, filters products, and handles events.</div>
+      </div>
+
+      <div class="analogy-box">
+        <div class="analogy-icon">🗄️</div>
+        <div class="analogy-name">Database Engine</div>
+        <div class="analogy-desc"><strong>Data Store</strong><br>Stores products, cart sessions, messages, and admin CRUD records.</div>
       </div>
     </div>
 
     <div class="script-bubble">
-      <strong>🗣️ What to say:</strong> "Think of a house: HTML is the brick walls, CSS is the wallpaper and lighting, and JavaScript is the electricity and smart automation that makes things work!"
+      <strong>🗣️ What to say:</strong> "Our architecture consists of 4 main layers: HTML for structure, CSS for design, JavaScript for logic, and a Database Engine for storing products, messages, and admin edits."
     </div>
   </div>
 
   <!-- SLIDE 3 -->
   <div class="slide-card">
     <span class="slide-num">SLIDE 03</span>
-    <h2 class="slide-title">3. The Secret Hero: LocalStorage</h2>
-    <div class="slide-subtitle">What is holding this whole project together?</div>
+    <h2 class="slide-title">3. Database Architecture & Data Storage</h2>
+    <div class="slide-subtitle">How is data managed in Orchard?</div>
 
     <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-dark);">
-      Instead of using an expensive backend server or database, our project uses <strong>LocalStorage</strong>—a free digital notebook built inside every web browser!
+      The application utilizes a structured Database System to manage data across 4 primary collections:
     </p>
 
     <div style="background: var(--bg-main); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 1rem;">
       <ul style="padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.8;">
-        <li><strong>Cart Memory:</strong> Items stay in your cart even if you refresh or close the tab.</li>
-        <li><strong>Contact Form:</strong> Customer messages are saved directly into the browser notebook.</li>
-        <li><strong>Admin Updates:</strong> Adding or editing products in the Admin panel saves to LocalStorage and updates the store immediately.</li>
+        <li><strong>Products Database:</strong> Holds product IDs, names, prices, stock quantities, and image links.</li>
+        <li><strong>Cart Database:</strong> Remembers selected items and quantities for active shopping sessions.</li>
+        <li><strong>Inquiries Database:</strong> Stores submitted contact form entries with timestamps.</li>
+        <li><strong>Admin Auth Store:</strong> Secures credentials for administrative management.</li>
       </ul>
     </div>
 
     <div class="script-bubble">
-      <strong>🗣️ What to say:</strong> "The main engine holding this project together is browser LocalStorage. It acts like a digital notebook that remembers our catalog, shopping cart, and messages without needing an external database server."
+      <strong>🗣️ What to say:</strong> "Our database system manages four collections: Products, Cart Sessions, Customer Inquiries, and Admin Credentials. This powers our real-time filtering, shopping cart, and Admin CRUD operations."
     </div>
   </div>
 
@@ -190,46 +197,46 @@
   <div class="slide-card">
     <span class="slide-num">SLIDE 04</span>
     <h2 class="slide-title">4. Overview of the 5 Pages</h2>
-    <div class="slide-subtitle">What pages exist in Orchard?</div>
+    <div class="slide-subtitle">Application Structure</div>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
       <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
-        <strong style="color: var(--primary-dark);">1. index.html (Home):</strong> Hero section, float animation, Bento highlights grid.
+        <strong style="color: var(--primary-dark);">1. index.html (Home):</strong> Hero section, float animation, Bento highlights.
       </div>
       <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
-        <strong style="color: var(--primary-dark);">2. products.html (Catalog):</strong> Category filter pills, live search bar, product cards.
+        <strong style="color: var(--primary-dark);">2. products.html (Catalog):</strong> Category filter pills, live search bar.
       </div>
       <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
-        <strong style="color: var(--primary-dark);">3. cart.html (Cart):</strong> Item table, +/- quantity stepper, coupon box, checkout modal.
+        <strong style="color: var(--primary-dark);">3. cart.html (Cart):</strong> Item table, +/- stepper, coupon box, checkout modal.
       </div>
       <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
-        <strong style="color: var(--primary-dark);">4. contact.html (Contact):</strong> Nursery address details and inquiry submission form.
+        <strong style="color: var(--primary-dark);">4. contact.html (Contact):</strong> Nursery details and inquiry submission form.
       </div>
       <div style="grid-column: 1 / -1; background: var(--primary-dark); color: #ffffff; padding: 1rem 1.25rem; border-radius: 10px;">
-        <strong>5. admin.html (Hidden Admin Suite):</strong> Secret password-protected page (admin/admin123) for product CRUD and message inbox.
+        <strong>5. admin.html (Hidden Admin Suite):</strong> Secret password-protected portal (admin/admin123) for product CRUD and message inbox.
       </div>
     </div>
 
     <div class="script-bubble">
-      <strong>🗣️ What to say:</strong> "There are 5 pages in total. 4 are public storefront pages, and 1 is a hidden secret Admin Panel accessible only by typing /admin.html in the address bar."
+      <strong>🗣️ What to say:</strong> "The project contains 5 pages in total: 4 public storefront pages and 1 hidden Admin Panel for catalog management."
     </div>
   </div>
 
   <!-- SLIDE 5 -->
   <div class="slide-card">
     <span class="slide-num">SLIDE 05</span>
-    <h2 class="slide-title">5. Quick Summary & Conclusion</h2>
-    <div class="slide-subtitle">Why is this project impressive?</div>
+    <h2 class="slide-title">5. Summary & Key Takeaways</h2>
+    <div class="slide-subtitle">Conclusion</div>
 
     <ul style="padding-left: 1.5rem; font-size: 1rem; line-height: 1.8; color: var(--text-dark);">
-      <li>✅ <strong>100% Responsive:</strong> Looks amazing on phones, tablets, and desktops.</li>
-      <li>⚡ <strong>Super Fast:</strong> Loads in milliseconds because there is no heavy backend code.</li>
-      <li>✨ <strong>Smooth Animations:</strong> Uses IntersectionObserver for scroll-triggered reveal animations.</li>
-      <li>🛠️ <strong>Full CRUD Admin Panel:</strong> Admin can add, edit, and delete products easily.</li>
+      <li>✅ <strong>Full Responsive Design:</strong> Formatted seamlessly for phones, tablets, and laptops.</li>
+      <li>⚡ <strong>High Performance:</strong> Instant page loading speeds.</li>
+      <li>✨ <strong>Scroll Animations:</strong> Uses IntersectionObserver for viewport reveal effects.</li>
+      <li>🛠️ <strong>Full Admin CRUD Suite:</strong> Store owner can Create, Read, Update, and Delete products.</li>
     </ul>
 
     <div class="script-bubble">
-      <strong>🗣️ What to say:</strong> "To summarize: Orchard proves that using simple, clean HTML, CSS, JavaScript, and LocalStorage, we can build a complete, beautiful e-commerce store. Thank you!"
+      <strong>🗣️ What to say:</strong> "In conclusion, Orchard demonstrates how a modern e-commerce platform can be built with clean architecture, responsive design, and database persistence. Thank you!"
     </div>
   </div>
 

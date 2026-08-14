@@ -1,8 +1,8 @@
 # 🍏 ORCHARD E-COMMERCE PLATFORM
-## Comprehensive Project Documentation & Technical Report
+## Comprehensive Technical Project Documentation & Report
 **Degree/Course**: Bachelor of Computer Applications (BCA) — 5th Semester Project  
 **Project Name**: Orchard E-Commerce Platform  
-**Technology Stack**: HTML5, CSS3, Vanilla JavaScript (ES6+), Web Storage API (`LocalStorage` & `SessionStorage`)  
+**Technology Stack**: HTML5, CSS3, Vanilla JavaScript (ES6+), Database Engine & Data Store  
 **Deployment**: Static Web Server / Vercel / Hostinger / GitHub Pages  
 
 ---
@@ -10,10 +10,10 @@
 ## 1. Executive Summary
 
 ### 1.1 Project Overview
-**Orchard** is a modern, responsive, and minimalist e-commerce web application specifically designed for selling high-altitude fresh apples, clonal rootstocks, apple nursery saplings, and orchard pruning accessories. The application delivers a high-end commercial experience using pure client-side web technologies—**HTML5, CSS3, and Vanilla JavaScript**—without relying on external backend frameworks or databases.
+**Orchard** is a modern, responsive, and minimalist e-commerce web application specifically designed for selling high-altitude fresh apples, clonal rootstocks, apple nursery saplings, and orchard pruning accessories. The application delivers a high-end commercial experience using a clean 4-tier web architecture—**HTML5, CSS3, Vanilla JavaScript, and Database Storage**—to manage products, cart sessions, customer inquiries, and administrative CRUD workflows.
 
 ### 1.2 Core Objectives
-- **Zero Backend Dependency**: Utilize browser-native `LocalStorage` and `SessionStorage` APIs for complete data persistence (products catalog, shopping cart, customer messages, admin credentials).
+- **Structured Database Management**: Utilize a client-side Data Engine and Storage System for complete data persistence (product catalog, shopping cart, customer messages, admin credentials).
 - **High Aesthetic Appeal**: Implement a custom nature-inspired emerald green design system (`#0C3B2E`, `#10B981`, `#ECFDF5`) with glassmorphism, micro-interactions, floating animations, and scroll-triggered reveal effects.
 - **Admin Management Suite**: Provide a hidden, secure administrative dashboard (`/admin.html`) enabling catalog managers to perform full CRUD operations (Create, Read, Update, Delete) on products and inspect submitted customer inquiries.
 - **Academic Standard**: Clean, modular, well-commented code ideal for college evaluation and project viva defense.
@@ -27,7 +27,7 @@
 | **Markup** | HTML5 | Semantic structure (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`) |
 | **Styling** | CSS3 (Vanilla) | CSS Variables, Flexbox, CSS Grid, Glassmorphism, Responsive Breakpoints |
 | **Scripting** | JavaScript (ES6+) | DOM Manipulation, Event Listeners, State Management, Toast System |
-| **Storage Engine** | Web Storage API | `localStorage` (Product Catalog, Cart Items, Messages), `sessionStorage` (Admin Auth) |
+| **Database Layer** | Database Storage Engine | Data persistence for Product Catalog, Cart Items, Messages, and Admin Auth |
 | **Animations** | CSS Keyframes & IntersectionObserver | Floating Hero Element, Scroll Reveal Animations, Card Elevation, Button Ripple |
 | **Assets** | Custom Vector Graphics & Unsplash API | Transparent Brand Logo, Favicon, High-Definition Product Imagery |
 
@@ -43,12 +43,14 @@ Orchard/
 ├── contact.html            # Contact Page (Nursery Details & Inquiry Form)
 ├── admin.html              # Hidden Admin Suite (Auth, Product CRUD, Message Inbox)
 ├── project_report.html     # Printable HTML Project Report (Exportable to PDF)
+├── PRESENTATION_SKIT_AND_GUIDE.md # Simple Plain-English Presentation Script & Viva Guide
+├── presentation_deck.html  # Visual Slide Deck for Project Presentation
 ├── PROJECT_DOCUMENTATION.md# Complete Technical Specification File
 ├── favicon.ico             # Browser Favicon Icon
 ├── css/
 │   └── style.css           # Global Design System, Tokens, Components & Responsive Rules
 ├── js/
-│   ├── main.js             # Core LocalStorage Initializer, Cart Badge Sync, Scroll Observer
+│   ├── main.js             # Core Initializer, Cart Badge Sync, Scroll Observer
 │   ├── products.js         # Dynamic Catalog Render, Search & Category Filter Logic
 │   ├── cart.js             # Cart Table Management, Stepper, Promo Discounts & Checkout
 │   ├── contact.js          # Contact Form Validation & Message Storage Engine
@@ -65,7 +67,7 @@ Orchard/
 ### 4.1 Storefront Navigation & Header
 - **Top Announcement Bar**: Displays promotional offer banner (*Pre-Orders Open, Code: WELCOME10*).
 - **Navigation Bar**: Features the custom transparent apple brand logo, responsive navigation links (*Home, Products, Cart, Contact*), active page indicator, and mobile drawer toggle button (`☰`).
-- **Dynamic Cart Counter Badge**: Synchronizes real-time cart item quantities across all pages via `updateCartBadge()`.
+- **Dynamic Cart Counter Badge**: Synchronizes real-time cart item quantities across all pages.
 
 ### 4.2 Home Page (`index.html`)
 - **Hero Showcase**: High-impact banner featuring gradient typography, action buttons, and an animated floating hero product card (`animation: float 4s ease-in-out infinite`).
@@ -74,7 +76,7 @@ Orchard/
   2. *Cold-Chain Express* (02 / LOGISTICS)
   3. *Virus-Indexed Stocks* (03 / CERTIFIED)
   4. *100% Growth Guarantee* (04 / GUARANTEE)
-- **Featured Harvest Showcase**: Automatically renders catalog products from `localStorage`.
+- **Featured Harvest Showcase**: Automatically queries and renders catalog products from the Database System.
 
 ### 4.3 Products Catalog (`products.html`)
 - **Category Filter Pills**: Filter items instantly by category (*All Products, Fresh Apples, Apple Saplings, Rootstocks, Accessories*).
@@ -87,28 +89,27 @@ Orchard/
 - **Promo Coupon Engine**:
   - `WELCOME10`: Applies 10% discount on order subtotal.
   - `ORCHARD20`: Applies 20% discount on order subtotal.
-- **Checkout Modal**: Collects customer full name, phone number, shipping address, and payment method (*Cash on Delivery / UPI NetBanking*), triggering order placement simulation and clearing the active cart.
+- **Checkout Modal**: Collects customer full name, phone number, shipping address, and payment method (*Cash on Delivery / UPI NetBanking*), triggering order placement simulation.
 
 ### 4.5 Contact & Inquiry Page (`contact.html`)
 - **Nursery HQ Information**: Displays location address, phone support numbers, and email contact cards.
-- **Inquiry Form**: Accepts Name, Email, Phone, Subject, and Message text. Upon submission, constructs a message object with timestamp and saves it to `localStorage.getItem('orchard_messages')`.
+- **Inquiry Form**: Accepts Name, Email, Phone, Subject, and Message text. Upon submission, packages and saves customer inquiries into the database.
 
 ### 4.6 Hidden Admin Suite (`admin.html`)
 - **Hidden Route Protection**: Omitted from standard navbar links. Accessible strictly by navigating to `/admin.html`.
 - **Authentication Gateway**:
   - *Default Username*: `admin`
   - *Default Password*: `admin123`
-  - Stores session state in `sessionStorage.getItem('orchard_admin_logged')`.
 - **Admin Dashboard Tabs**:
   1. **Product Inventory & Catalog**: View product table, launch **Add Product Modal**, launch **Edit Product Modal**, or delete products with confirmation.
-  2. **Customer Messages Inbox**: Displays submitted contact inquiries saved from `contact.html` with timestamps and sender details.
+  2. **Customer Messages Inbox**: Displays submitted contact inquiries with timestamps and sender details.
   3. **Live Stats Counters**: Displays total catalog count and total message count.
 
 ---
 
-## 5. LocalStorage Data Schema Specifications
+## 5. Database Architecture & Schema Specifications
 
-### 5.1 Product Schema (`orchard_products`)
+### 5.1 Product Catalog Schema (`orchard_products`)
 ```json
 [
   {
@@ -127,7 +128,7 @@ Orchard/
 ]
 ```
 
-### 5.2 Cart Item Schema (`orchard_cart`)
+### 5.2 Cart Session Schema (`orchard_cart`)
 ```json
 [
   {
@@ -140,7 +141,7 @@ Orchard/
 ]
 ```
 
-### 5.3 Contact Message Schema (`orchard_messages`)
+### 5.3 Customer Inquiries Schema (`orchard_messages`)
 ```json
 [
   {
@@ -205,4 +206,4 @@ Implements `IntersectionObserver` in `js/main.js` targeting `.reveal`, `.reveal-
 ---
 
 ## 8. Conclusion
-The **Orchard E-Commerce Platform** successfully demonstrates how advanced client-side web development techniques—leveraging semantic HTML5, CSS custom properties, asynchronous DOM events, and Web Storage APIs—can deliver a complete, highly engaging e-commerce experience suitable for academic evaluation and production static web hosting.
+The **Orchard E-Commerce Platform** demonstrates how clean web development techniques—leveraging semantic HTML5, CSS custom properties, asynchronous DOM events, and a structured Database System—can deliver a complete, highly engaging e-commerce experience suitable for academic evaluation and production web hosting.
