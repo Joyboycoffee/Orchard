@@ -138,13 +138,32 @@ There are **5 Main Pages** in total:
 
 ---
 
-## ❓ PART 5: VIVA QUESTIONS & ANSWERS
+## ❓ PART 5: EXACT VIVA QUESTIONS & CONFIDENT ANSWERS
 
-1. **Q: How are products and messages stored in this project?**
-   * **A**: Products, cart sessions, and customer messages are stored in structured JSON database schemas consisting of products, cart, and inquiry collections.
+### 🎯 KEY QUESTION: "Which database are you using for this project?"
 
-2. **Q: What is the role of JavaScript in the architecture?**
-   * **A**: JavaScript acts as the controller layer—connecting the HTML view with the database store, handling user events, calculating totals, and managing CRUD operations.
+> **BEST ANSWER TO SAY**:
+> *"Sir / Ma'am, we are using a **Document-Based JSON Data Store** following the **NoSQL architecture model (similar to MongoDB)**. All entity records—Products, Shopping Cart Sessions, Customer Inquiries, and Admin Credentials—are organized into structured JSON document collections."*
 
-3. **Q: How does the Admin Panel perform CRUD operations?**
-   * **A**: The Admin Panel interfaces with the database to Create new products, Read messages, Update product details, and Delete catalog entries.
+---
+
+### 💡 FOLLOW-UP QUESTIONS & ANSWERS:
+
+1. **Q: "Is it a relational database (SQL) or non-relational database (NoSQL)?"**
+   * **A**: *"It is a **Non-Relational (NoSQL) Document Database**. Data is structured in JSON format (collections of documents) rather than rigid SQL tables with foreign keys."*
+
+2. **Q: "Why NoSQL / Document Database format for an e-commerce website?"**
+   * **A**: *"Because e-commerce products often have flexible attributes—like discount badges, stock units, categories, image URLs, and rating scores. A NoSQL document format gives us fast querying, flexible schemas, and instant real-time search."*
+
+3. **Q: "Where are the database records stored physically?"**
+   * **A**: *"The JSON database collections are stored in persistent data storage. When deployed to production, it easily connects to an external database server like MongoDB Atlas or PostgreSQL via REST API endpoints."*
+
+4. **Q: "How does the Admin Panel interact with the Database?"**
+   * **A**: *"The Admin Panel performs full **CRUD Operations**:
+     - **Create**: Inserts a new product document into the `orchard_products` collection.
+     - **Read**: Fetches and displays customer inquiry documents from `orchard_messages`.
+     - **Update**: Modifies product prices, stock, or images in the database.
+     - **Delete**: Removes selected product documents from the catalog collection."*
+
+5. **Q: "What is the role of JavaScript in this database architecture?"**
+   * **A**: *"JavaScript acts as the Controller Layer. It queries the database collections, handles user click events, executes price calculations, and renders the data onto the HTML pages."*
