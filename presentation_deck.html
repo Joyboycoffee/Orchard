@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orchard Project — Simple Presentation Deck & Skit</title>
+  <link rel="icon" type="image/png" href="images/logo_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-dark: #0c3b2e;
+      --primary: #10b981;
+      --primary-bg: #ecfdf5;
+      --accent-gold: #d4af37;
+      --bg-main: #f8fafc;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #cbd5e1;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    body { background: var(--bg-main); color: var(--text-dark); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    
+    .deck-header { text-align: center; margin-bottom: 2rem; }
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary-dark);
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      z-index: 100;
+    }
+    .print-btn:hover { background: var(--primary); }
+
+    .slide-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 20px;
+      padding: 3rem;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 15px 35px rgba(12, 59, 46, 0.08);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .slide-num {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: var(--primary-bg);
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .slide-title { font-size: 1.8rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 1rem; }
+    .slide-subtitle { font-size: 1.05rem; font-weight: 600; color: var(--primary); margin-bottom: 1.5rem; }
+
+    .analogy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .analogy-box {
+      background: var(--bg-main);
+      border-radius: 14px;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .analogy-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .analogy-name { font-weight: 800; font-size: 1.2rem; color: var(--primary-dark); margin-bottom: 0.4rem; }
+    .analogy-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+    .script-bubble {
+      background: var(--primary-bg);
+      border-left: 5px solid var(--primary);
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-top: 1.25rem;
+      font-size: 0.95rem;
+      color: var(--primary-dark);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    @media print {
+      .print-btn { display: none; }
+      body { background: #ffffff; padding: 0; }
+      .slide-card { page-break-after: always; box-shadow: none; border: 1px solid #ddd; margin-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Save as PDF / Print Presentation Deck</button>
+
+  <div class="deck-header">
+    <img src="images/logo_transparent.png" alt="Orchard Logo" style="width: 56px; height: 56px; margin-bottom: 0.5rem;" />
+    <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--primary-dark);">ORCHARD PROJECT PRESENTATION DECK</h1>
+    <p style="color: var(--text-muted); font-size: 0.95rem;">Ultra-Simple Plain Language Guide & Skit Script</p>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <div class="slide-card">
+    <span class="slide-num">SLIDE 01</span>
+    <h2 class="slide-title">1. Introduction to Orchard</h2>
+    <div class="slide-subtitle">What is this project about?</div>
+    <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-dark);">
+      <strong>Orchard</strong> is an online store for buying fresh Himalayan apples, apple trees (saplings), rootstocks, and garden tools. It looks and works like a real commercial app, built using simple web technologies without complex database servers!
+    </p>
+
+    <div class="script-bubble">
+      <strong>🗣️ What to say:</strong> "Hello! Today I am presenting Orchard, a simple e-commerce website for buying fresh apples and nursery saplings. It is designed to be super fast, clean, and beginner-friendly."
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide-card">
+    <span class="slide-num">SLIDE 02</span>
+    <h2 class="slide-title">2. The 3 Core Building Blocks (HTML, CSS & JS)</h2>
+    <div class="slide-subtitle">How do websites get built?</div>
+
+    <div class="analogy-grid">
+      <div class="analogy-box">
+        <div class="analogy-icon">🦴</div>
+        <div class="analogy-name">HTML</div>
+        <div class="analogy-desc"><strong>The Skeleton</strong><br>Holds the text, headings, pictures, and buttons.</div>
+      </div>
+
+      <div class="analogy-box">
+        <div class="analogy-icon">🎨</div>
+        <div class="analogy-name">CSS</div>
+        <div class="analogy-desc"><strong>The Clothes</strong><br>Adds colors, rounded card corners, layout grid, and hover effects.</div>
+      </div>
+
+      <div class="analogy-box">
+        <div class="analogy-icon">🧠</div>
+        <div class="analogy-name">JavaScript</div>
+        <div class="analogy-desc"><strong>The Brain</strong><br>Calculates cart bills, filters products, saves user items, and moves objects.</div>
+      </div>
+    </div>
+
+    <div class="script-bubble">
+      <strong>🗣️ What to say:</strong> "Think of a house: HTML is the brick walls, CSS is the wallpaper and lighting, and JavaScript is the electricity and smart automation that makes things work!"
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide-card">
+    <span class="slide-num">SLIDE 03</span>
+    <h2 class="slide-title">3. The Secret Hero: LocalStorage</h2>
+    <div class="slide-subtitle">What is holding this whole project together?</div>
+
+    <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-dark);">
+      Instead of using an expensive backend server or database, our project uses <strong>LocalStorage</strong>—a free digital notebook built inside every web browser!
+    </p>
+
+    <div style="background: var(--bg-main); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 1rem;">
+      <ul style="padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.8;">
+        <li><strong>Cart Memory:</strong> Items stay in your cart even if you refresh or close the tab.</li>
+        <li><strong>Contact Form:</strong> Customer messages are saved directly into the browser notebook.</li>
+        <li><strong>Admin Updates:</strong> Adding or editing products in the Admin panel saves to LocalStorage and updates the store immediately.</li>
+      </ul>
+    </div>
+
+    <div class="script-bubble">
+      <strong>🗣️ What to say:</strong> "The main engine holding this project together is browser LocalStorage. It acts like a digital notebook that remembers our catalog, shopping cart, and messages without needing an external database server."
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide-card">
+    <span class="slide-num">SLIDE 04</span>
+    <h2 class="slide-title">4. Overview of the 5 Pages</h2>
+    <div class="slide-subtitle">What pages exist in Orchard?</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+      <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
+        <strong style="color: var(--primary-dark);">1. index.html (Home):</strong> Hero section, float animation, Bento highlights grid.
+      </div>
+      <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
+        <strong style="color: var(--primary-dark);">2. products.html (Catalog):</strong> Category filter pills, live search bar, product cards.
+      </div>
+      <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
+        <strong style="color: var(--primary-dark);">3. cart.html (Cart):</strong> Item table, +/- quantity stepper, coupon box, checkout modal.
+      </div>
+      <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
+        <strong style="color: var(--primary-dark);">4. contact.html (Contact):</strong> Nursery address details and inquiry submission form.
+      </div>
+      <div style="grid-column: 1 / -1; background: var(--primary-dark); color: #ffffff; padding: 1rem 1.25rem; border-radius: 10px;">
+        <strong>5. admin.html (Hidden Admin Suite):</strong> Secret password-protected page (admin/admin123) for product CRUD and message inbox.
+      </div>
+    </div>
+
+    <div class="script-bubble">
+      <strong>🗣️ What to say:</strong> "There are 5 pages in total. 4 are public storefront pages, and 1 is a hidden secret Admin Panel accessible only by typing /admin.html in the address bar."
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide-card">
+    <span class="slide-num">SLIDE 05</span>
+    <h2 class="slide-title">5. Quick Summary & Conclusion</h2>
+    <div class="slide-subtitle">Why is this project impressive?</div>
+
+    <ul style="padding-left: 1.5rem; font-size: 1rem; line-height: 1.8; color: var(--text-dark);">
+      <li>✅ <strong>100% Responsive:</strong> Looks amazing on phones, tablets, and desktops.</li>
+      <li>⚡ <strong>Super Fast:</strong> Loads in milliseconds because there is no heavy backend code.</li>
+      <li>✨ <strong>Smooth Animations:</strong> Uses IntersectionObserver for scroll-triggered reveal animations.</li>
+      <li>🛠️ <strong>Full CRUD Admin Panel:</strong> Admin can add, edit, and delete products easily.</li>
+    </ul>
+
+    <div class="script-bubble">
+      <strong>🗣️ What to say:</strong> "To summarize: Orchard proves that using simple, clean HTML, CSS, JavaScript, and LocalStorage, we can build a complete, beautiful e-commerce store. Thank you!"
+    </div>
+  </div>
+
+</body>
+</html>
