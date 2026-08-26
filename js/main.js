@@ -137,9 +137,9 @@ function initLocalStorage() {
     validProducts = false;
   }
 
-  if (!currentVer || currentVer !== 'v6' || !validProducts) {
+  if (!currentVer || currentVer !== 'v7' || !validProducts) {
     localStorage.setItem('orchard_products', JSON.stringify(DEFAULT_PRODUCTS));
-    localStorage.setItem('orchard_products_version', 'v6');
+    localStorage.setItem('orchard_products_version', 'v7');
   }
   if (!localStorage.getItem('orchard_cart')) {
     localStorage.setItem('orchard_cart', JSON.stringify([]));
@@ -159,7 +159,7 @@ function getProducts() {
     }
   } catch(e) {}
   localStorage.setItem('orchard_products', JSON.stringify(DEFAULT_PRODUCTS));
-  localStorage.setItem('orchard_products_version', 'v6');
+  localStorage.setItem('orchard_products_version', 'v7');
   return DEFAULT_PRODUCTS;
 }
 
