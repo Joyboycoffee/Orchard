@@ -55,7 +55,7 @@ function renderAdminProducts() {
     <tr>
       <td>
         <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <img src="${product.image}" alt="${product.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;" onerror="this.onerror=null; this.src=product.fallbackImage || LOGO_BASE64;" />
+          <img src="${product.image}" alt="${product.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;" onerror="this.onerror=null; this.src='${product.fallbackImage || LOGO_BASE64}';" />
           <div>
             <div style="font-weight: 700; color: var(--primary-dark);">${product.name}</div>
             <div style="font-size: 0.75rem; color: var(--text-muted);">${product.categoryName || product.category}</div>

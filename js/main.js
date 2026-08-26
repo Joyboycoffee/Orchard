@@ -126,9 +126,20 @@ const DEFAULT_PRODUCTS = [
 // Initialize LocalStorage Data on Load
 function initLocalStorage() {
   const currentVer = localStorage.getItem('orchard_products_version');
-  if (!currentVer || currentVer !== 'v5' || !localStorage.getItem('orchard_products')) {
+  const storedProducts = localStorage.getItem('orchard_products');
+  let validProducts = false;
+  try {
+    const parsed = JSON.parse(storedProducts);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      validProducts = true;
+    }
+  } catch(e) {
+    validProducts = false;
+  }
+
+  if (!currentVer || currentVer !== 'v6' || !validProducts) {
     localStorage.setItem('orchard_products', JSON.stringify(DEFAULT_PRODUCTS));
-    localStorage.setItem('orchard_products_version', 'v5');
+    localStorage.setItem('orchard_products_version', 'v6');
   }
   if (!localStorage.getItem('orchard_cart')) {
     localStorage.setItem('orchard_cart', JSON.stringify([]));
@@ -142,10 +153,14 @@ function initLocalStorage() {
 function getProducts() {
   initLocalStorage();
   try {
-    return JSON.parse(localStorage.getItem('orchard_products')) || DEFAULT_PRODUCTS;
-  } catch(e) {
-    return DEFAULT_PRODUCTS;
-  }
+    const products = JSON.parse(localStorage.getItem('orchard_products'));
+    if (Array.isArray(products) && products.length > 0) {
+      return products;
+    }
+  } catch(e) {}
+  localStorage.setItem('orchard_products', JSON.stringify(DEFAULT_PRODUCTS));
+  localStorage.setItem('orchard_products_version', 'v6');
+  return DEFAULT_PRODUCTS;
 }
 
 function saveProducts(products) {

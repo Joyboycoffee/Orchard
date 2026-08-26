@@ -29,7 +29,7 @@ function renderCart() {
     <tr>
       <td>
         <div class="cart-item-info">
-          <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.onerror=null; this.src=item.fallbackImage || LOGO_BASE64;" />
+          <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.onerror=null; this.src='${item.fallbackImage || LOGO_BASE64}';" />
           <div>
             <div class="cart-item-title">${item.name}</div>
             <div style="font-size: 0.8rem; color: var(--text-muted);">${formatCurrency(item.price)} each</div>
