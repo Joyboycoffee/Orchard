@@ -277,7 +277,7 @@ function handleProductFormSubmit(e) {
   const originalPrice = document.getElementById('prod-original-price').value ? Number(document.getElementById('prod-original-price').value) : null;
   const stock = Number(document.getElementById('prod-stock').value);
   const badge = document.getElementById('prod-badge').value.trim();
-  const image = document.getElementById('prod-image').value.trim() || 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80';
+  const image = document.getElementById('prod-image').value.trim() || 'data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23EF4444%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EOrchard%20Produce%3C/text%3E%3C/svg%3E';
   const description = document.getElementById('prod-description').value.trim();
 
   const categoryNames = {

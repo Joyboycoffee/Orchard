@@ -17,116 +17,108 @@ const LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQcAAAELCAYAA
 
 const DEFAULT_PRODUCTS = [
   {
-    id: "prod-1",
-    name: "Kullu Royal Honeycrisp",
-    category: "fresh-apples",
-    categoryName: "Fresh Apples",
-    price: 399,
-    originalPrice: 499,
-    stock: 120,
-    badge: "Best Seller",
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23EF4444%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27290%27%20r%3D%27140%27%20fill%3D%27%23F87171%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2060%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2718%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20220%2070%20200%20120%20Q%20250%20150%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EHoneycrisp%20Fresh%20Apple%3C/text%3E%3C/svg%3E",
-    description: "Ultra-crisp high-altitude Honeycrisp harvested in Kullu Valley. Exploding juice cells with sweet-tart balance."
+    "id": "prod-1",
+    "name": "Kullu Royal Honeycrisp",
+    "category": "fresh-apples",
+    "categoryName": "Fresh Apples",
+    "price": 399,
+    "originalPrice": 499,
+    "stock": 120,
+    "badge": "Best Seller",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23EF4444%27/%3E%3Ccircle%20cx%3D%27230%27%20cy%3D%27290%27%20r%3D%27130%27%20fill%3D%27%23F87171%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EKullu%20Royal%20Honeycrisp%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23EF4444%27/%3E%3Ccircle%20cx%3D%27230%27%20cy%3D%27290%27%20r%3D%27130%27%20fill%3D%27%23F87171%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EKullu%20Royal%20Honeycrisp%3C/text%3E%3C/svg%3E",
+    "description": "Ultra-crisp high-altitude Honeycrisp harvested in Kullu Valley. Exploding juice cells with sweet-tart balance."
   },
   {
-    id: "prod-2",
-    name: "Himalayan Fuji Supreme",
-    category: "fresh-apples",
-    categoryName: "Fresh Apples",
-    price: 449,
-    originalPrice: 549,
-    stock: 95,
-    badge: "Premium",
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23991B1B%27/%3E%3Ccircle%20cx%3D%27250%27%20cy%3D%27290%27%20r%3D%27140%27%20fill%3D%27%23DC2626%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2060%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2718%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20220%2070%20200%20120%20Q%20250%20150%20300%20120%27%20fill%3D%27%23059669%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EHimalayan%20Fuji%20Supreme%3C/text%3E%3C/svg%3E",
-    description: "Intense honey sweetness, extra dense crunch, hand-picked from 7,500 ft elevation orchards."
+    "id": "prod-2",
+    "name": "Himalayan Fuji Supreme",
+    "category": "fresh-apples",
+    "categoryName": "Fresh Apples",
+    "price": 449,
+    "originalPrice": 549,
+    "stock": 95,
+    "badge": "Premium",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23991B1B%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27290%27%20r%3D%27140%27%20fill%3D%27%23DC2626%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%23059669%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EHimalayan%20Fuji%20Supreme%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23991B1B%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27290%27%20r%3D%27140%27%20fill%3D%27%23DC2626%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%23059669%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EHimalayan%20Fuji%20Supreme%3C/text%3E%3C/svg%3E",
+    "description": "Intense honey sweetness, extra dense crunch, hand-picked from 7,500 ft elevation orchards."
   },
   {
-    id: "prod-3",
-    name: "Organic Royal Gala Crimson",
-    category: "fresh-apples",
-    categoryName: "Fresh Apples",
-    price: 349,
-    originalPrice: 429,
-    stock: 200,
-    badge: "100% Organic",
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23B91C1C%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27290%27%20r%3D%27140%27%20fill%3D%27%23F87171%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2060%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2718%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20220%2070%20200%20120%20Q%20250%20150%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EOrganic%20Royal%20Gala%3C/text%3E%3C/svg%3E",
-    description: "Delicate floral aroma, crisp skin, pesticide-free apples ideal for fresh daily snacking."
+    "id": "prod-3",
+    "name": "Organic Royal Gala Crimson",
+    "category": "fresh-apples",
+    "categoryName": "Fresh Apples",
+    "price": 349,
+    "originalPrice": 429,
+    "stock": 200,
+    "badge": "100% Organic",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23B91C1C%27/%3E%3Ccircle%20cx%3D%27230%27%20cy%3D%27290%27%20r%3D%27130%27%20fill%3D%27%23F87171%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EOrganic%20Royal%20Gala%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23B91C1C%27/%3E%3Ccircle%20cx%3D%27230%27%20cy%3D%27290%27%20r%3D%27130%27%20fill%3D%27%23F87171%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EOrganic%20Royal%20Gala%3C/text%3E%3C/svg%3E",
+    "description": "Delicate floral aroma, crisp skin, pesticide-free apples ideal for fresh daily snacking."
   },
   {
-    id: "prod-4",
-    name: "High-Altitude Pink Lady",
-    category: "fresh-apples",
-    categoryName: "Fresh Apples",
-    price: 489,
-    originalPrice: 599,
-    stock: 75,
-    badge: "Seasonal",
-    rating: 5.0,
-    image: "https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23EC4899%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27290%27%20r%3D%27140%27%20fill%3D%27%23F472B6%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2060%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2718%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20220%2070%20200%20120%20Q%20250%20150%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EPink%20Lady%20Apple%3C/text%3E%3C/svg%3E",
-    description: "Distinct pink blush with a tangy fizzy crunch ripened under 200+ days of mountain sunshine."
+    "id": "prod-4",
+    "name": "High-Altitude Pink Lady",
+    "category": "fresh-apples",
+    "categoryName": "Fresh Apples",
+    "price": 489,
+    "originalPrice": 599,
+    "stock": 75,
+    "badge": "Seasonal",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23EC4899%27/%3E%3Ccircle%20cx%3D%27230%27%20cy%3D%27290%27%20r%3D%27130%27%20fill%3D%27%23F472B6%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EPink%20Lady%20Apple%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27330%27%20r%3D%27180%27%20fill%3D%27%23EC4899%27/%3E%3Ccircle%20cx%3D%27230%27%20cy%3D%27290%27%20r%3D%27130%27%20fill%3D%27%23F472B6%27/%3E%3Cpath%20d%3D%27M300%20150%20Q%20315%2090%20345%2050%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2720%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M300%20120%20Q%20210%2070%20190%20120%20Q%20240%20160%20300%20120%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EPink%20Lady%20Apple%3C/text%3E%3C/svg%3E",
+    "description": "Distinct pink blush with a tangy fizzy crunch ripened under 200+ days of mountain sunshine."
   },
   {
-    id: "prod-5",
-    name: "Buckeye Gala Sapling (M9 T337)",
-    category: "apple-trees",
-    categoryName: "Apple Saplings",
-    price: 380,
-    originalPrice: 450,
-    stock: 350,
-    badge: "Feathered Tree",
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M290%20500%20L310%20500%20L305%20250%20L295%20250%20Z%27%20fill%3D%27%2378350F%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27200%27%20r%3D%27120%27%20fill%3D%27%2310B981%27/%3E%3Ccircle%20cx%3D%27250%27%20cy%3D%27180%27%20r%3D%2780%27%20fill%3D%27%23059669%27/%3E%3Ccircle%20cx%3D%27350%27%20cy%3D%27180%27%20r%3D%2780%27%20fill%3D%27%2334D399%27/%3E%3Ccircle%20cx%3D%27280%27%20cy%3D%27160%27%20r%3D%2715%27%20fill%3D%27%23EF4444%27/%3E%3Ccircle%20cx%3D%27330%27%20cy%3D%27210%27%20r%3D%2715%27%20fill%3D%27%23EF4444%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EGala%20Sapling%20%28M9%20T337%29%3C/text%3E%3C/svg%3E",
-    description: "2-Year Knip-boom feathered apple tree grafted on dwarfing M9 T337 for high-density planting."
+    "id": "prod-5",
+    "name": "Buckeye Gala Sapling (M9 T337)",
+    "category": "apple-trees",
+    "categoryName": "Apple Saplings",
+    "price": 380,
+    "originalPrice": 450,
+    "stock": 350,
+    "badge": "Feathered Tree",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M290%20500%20L310%20500%20L305%20250%20L295%20250%20Z%27%20fill%3D%27%2378350F%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27200%27%20r%3D%27120%27%20fill%3D%27%2310B981%27/%3E%3Ccircle%20cx%3D%27250%27%20cy%3D%27180%27%20r%3D%2780%27%20fill%3D%27%23059669%27/%3E%3Ccircle%20cx%3D%27350%27%20cy%3D%27180%27%20r%3D%2780%27%20fill%3D%27%2334D399%27/%3E%3Ccircle%20cx%3D%27280%27%20cy%3D%27160%27%20r%3D%2715%27%20fill%3D%27%23EF4444%27/%3E%3Ccircle%20cx%3D%27330%27%20cy%3D%27210%27%20r%3D%2715%27%20fill%3D%27%23EF4444%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EGala%20Sapling%20%28M9%20T337%29%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M290%20500%20L310%20500%20L305%20250%20L295%20250%20Z%27%20fill%3D%27%2378350F%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27200%27%20r%3D%27120%27%20fill%3D%27%2310B981%27/%3E%3Ccircle%20cx%3D%27250%27%20cy%3D%27180%27%20r%3D%2780%27%20fill%3D%27%23059669%27/%3E%3Ccircle%20cx%3D%27350%27%20cy%3D%27180%27%20r%3D%2780%27%20fill%3D%27%2334D399%27/%3E%3Ccircle%20cx%3D%27280%27%20cy%3D%27160%27%20r%3D%2715%27%20fill%3D%27%23EF4444%27/%3E%3Ccircle%20cx%3D%27330%27%20cy%3D%27210%27%20r%3D%2715%27%20fill%3D%27%23EF4444%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EGala%20Sapling%20%28M9%20T337%29%3C/text%3E%3C/svg%3E",
+    "description": "2-Year Knip-boom feathered apple tree grafted on dwarfing M9 T337 for high-density planting."
   },
   {
-    id: "prod-6",
-    name: "Jeromine Red Spur Tree (MM106)",
-    category: "apple-trees",
-    categoryName: "Apple Saplings",
-    price: 399,
-    originalPrice: 480,
-    stock: 180,
-    badge: "Spur Type",
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1590005354167-6da97870c757?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M290%20500%20L310%20500%20L305%20220%20L295%20220%20Z%27%20fill%3D%27%2378350F%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27180%27%20r%3D%27130%27%20fill%3D%27%23059669%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27160%27%20r%3D%2790%27%20fill%3D%27%23047857%27/%3E%3Ccircle%20cx%3D%27360%27%20cy%3D%27160%27%20r%3D%2790%27%20fill%3D%27%2310B981%27/%3E%3Ccircle%20cx%3D%27270%27%20cy%3D%27140%27%20r%3D%2718%27%20fill%3D%27%23DC2626%27/%3E%3Ccircle%20cx%3D%27340%27%20cy%3D%27190%27%20r%3D%2718%27%20fill%3D%27%23DC2626%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EJeromine%20Red%20Spur%20Tree%3C/text%3E%3C/svg%3E",
-    description: "Produces 100% full dark crimson fruit even on interior spurs. Strong semi-dwarf MM106 roots."
+    "id": "prod-6",
+    "name": "Jeromine Red Spur Tree (MM106)",
+    "category": "apple-trees",
+    "categoryName": "Apple Saplings",
+    "price": 399,
+    "originalPrice": 480,
+    "stock": 180,
+    "badge": "Spur Type",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M290%20500%20L310%20500%20L305%20220%20L295%20220%20Z%27%20fill%3D%27%2378350F%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27180%27%20r%3D%27130%27%20fill%3D%27%23059669%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27160%27%20r%3D%2790%27%20fill%3D%27%23047857%27/%3E%3Ccircle%20cx%3D%27360%27%20cy%3D%27160%27%20r%3D%2790%27%20fill%3D%27%2310B981%27/%3E%3Ccircle%20cx%3D%27270%27%20cy%3D%27140%27%20r%3D%2718%27%20fill%3D%27%23DC2626%27/%3E%3Ccircle%20cx%3D%27340%27%20cy%3D%27190%27%20r%3D%2718%27%20fill%3D%27%23DC2626%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EJeromine%20Red%20Spur%20Tree%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M290%20500%20L310%20500%20L305%20220%20L295%20220%20Z%27%20fill%3D%27%2378350F%27/%3E%3Ccircle%20cx%3D%27300%27%20cy%3D%27180%27%20r%3D%27130%27%20fill%3D%27%23059669%27/%3E%3Ccircle%20cx%3D%27240%27%20cy%3D%27160%27%20r%3D%2790%27%20fill%3D%27%23047857%27/%3E%3Ccircle%20cx%3D%27360%27%20cy%3D%27160%27%20r%3D%2790%27%20fill%3D%27%2310B981%27/%3E%3Ccircle%20cx%3D%27270%27%20cy%3D%27140%27%20r%3D%2718%27%20fill%3D%27%23DC2626%27/%3E%3Ccircle%20cx%3D%27340%27%20cy%3D%27190%27%20r%3D%2718%27%20fill%3D%27%23DC2626%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EJeromine%20Red%20Spur%20Tree%3C/text%3E%3C/svg%3E",
+    "description": "Produces 100% full dark crimson fruit even on interior spurs. Strong semi-dwarf MM106 roots."
   },
   {
-    id: "prod-7",
-    name: "M9 T337 Clonal Rootstock (10 Pcs)",
-    category: "rootstocks",
-    categoryName: "Rootstocks",
-    price: 999,
-    originalPrice: 1200,
-    stock: 500,
-    badge: "Dutch Clonal",
-    rating: 5.0,
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M200%20480%20Q%20250%20250%20280%20120%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M300%20480%20Q%20300%20250%20300%20100%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M400%20480%20Q%20350%20250%20320%20120%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M280%20120%20Q%20240%2080%20230%20100%20Q%20260%20130%20280%20120%27%20fill%3D%27%2310B981%27/%3E%3Cpath%20d%3D%27M300%20100%20Q%20340%2060%20350%2080%20Q%20320%20110%20300%20100%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EM9%20T337%20Rootstock%3C/text%3E%3C/svg%3E",
-    description: "Grade-1 virus-free dwarfing rootstock liners for winter bench grafting and orchard establishment."
+    "id": "prod-7",
+    "name": "M9 T337 Clonal Rootstock (10 Pcs)",
+    "category": "rootstocks",
+    "categoryName": "Rootstocks",
+    "price": 999,
+    "originalPrice": 1200,
+    "stock": 500,
+    "badge": "Dutch Clonal",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M200%20480%20Q%20250%20250%20280%20120%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M300%20480%20Q%20300%20250%20300%20100%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M400%20480%20Q%20350%20250%20320%20120%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M280%20120%20Q%20240%2080%20230%20100%20Q%20260%20130%20280%20120%27%20fill%3D%27%2310B981%27/%3E%3Cpath%20d%3D%27M300%20100%20Q%20340%2060%20350%2080%20Q%20320%20110%20300%20100%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EM9%20T337%20Rootstock%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M200%20480%20Q%20250%20250%20280%20120%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M300%20480%20Q%20300%20250%20300%20100%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M400%20480%20Q%20350%20250%20320%20120%27%20stroke%3D%27%2378350F%27%20stroke-width%3D%2716%27%20fill%3D%27none%27/%3E%3Cpath%20d%3D%27M280%20120%20Q%20240%2080%20230%20100%20Q%20260%20130%20280%20120%27%20fill%3D%27%2310B981%27/%3E%3Cpath%20d%3D%27M300%20100%20Q%20340%2060%20350%2080%20Q%20320%20110%20300%20100%27%20fill%3D%27%2310B981%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EM9%20T337%20Rootstock%3C/text%3E%3C/svg%3E",
+    "description": "Grade-1 virus-free dwarfing rootstock liners for winter bench grafting and orchard establishment."
   },
   {
-    id: "prod-8",
-    name: "Japanese SK5 Pruning Secateurs",
-    category: "accessories",
-    categoryName: "Accessories",
-    price: 1499,
-    originalPrice: 1899,
-    stock: 60,
-    badge: "Orchard Tool",
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=600&q=80",
-    fallbackImage: "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M150%20400%20L300%20250%20L400%20150%20C420%20130%20450%20130%20460%20150%20C470%20170%20460%20200%20440%20210%20L300%20320%20Z%27%20fill%3D%27%2394A3B8%27/%3E%3Cpath%20d%3D%27M150%20400%20C120%20430%20120%20470%20150%20490%20C180%20500%20220%20480%20250%20430%20L300%20320%20Z%27%20fill%3D%27%23EF4444%27/%3E%3Cpath%20d%3D%27M250%20200%20L400%20350%20C430%20380%20470%20380%20490%20350%20C500%20320%20480%20280%20430%20250%20L320%20200%20Z%27%20fill%3D%27%230C3B2E%27/%3E%3Ccircle%20cx%3D%27280%27%20cy%3D%27280%27%20r%3D%2716%27%20fill%3D%27%23D4AF37%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EJapanese%20SK5%20Secateurs%3C/text%3E%3C/svg%3E",
-    description: "Razor-sharp Japanese high-carbon SK5 steel blades for clean precision pruning up to 25mm."
+    "id": "prod-8",
+    "name": "Japanese SK5 Pruning Secateurs",
+    "category": "accessories",
+    "categoryName": "Accessories",
+    "price": 1499,
+    "originalPrice": 1899,
+    "stock": 60,
+    "badge": "Orchard Tool",
+    "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M150%20400%20L300%20250%20L400%20150%20C420%20130%20450%20130%20460%20150%20C470%20170%20460%20200%20440%20210%20L300%20320%20Z%27%20fill%3D%27%2394A3B8%27/%3E%3Cpath%20d%3D%27M150%20400%20C120%20430%20120%20470%20150%20490%20C180%20500%20220%20480%20250%20430%20L300%20320%20Z%27%20fill%3D%27%23EF4444%27/%3E%3Cpath%20d%3D%27M250%20200%20L400%20350%20C430%20380%20470%20380%20490%20350%20C500%20320%20480%20280%20430%20250%20L320%20200%20Z%27%20fill%3D%27%230C3B2E%27/%3E%3Ccircle%20cx%3D%27280%27%20cy%3D%27280%27%20r%3D%2716%27%20fill%3D%27%23D4AF37%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EJapanese%20SK5%20Secateurs%3C/text%3E%3C/svg%3E",
+    "fallbackImage": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20600%20600%27%3E%3Crect%20width%3D%27600%27%20height%3D%27600%27%20rx%3D%2730%27%20fill%3D%27%23ECFDF5%27/%3E%3Cpath%20d%3D%27M150%20400%20L300%20250%20L400%20150%20C420%20130%20450%20130%20460%20150%20C470%20170%20460%20200%20440%20210%20L300%20320%20Z%27%20fill%3D%27%2394A3B8%27/%3E%3Cpath%20d%3D%27M150%20400%20C120%20430%20120%20470%20150%20490%20C180%20500%20220%20480%20250%20430%20L300%20320%20Z%27%20fill%3D%27%23EF4444%27/%3E%3Cpath%20d%3D%27M250%20200%20L400%20350%20C430%20380%20470%20380%20490%20350%20C500%20320%20480%20280%20430%20250%20L320%20200%20Z%27%20fill%3D%27%230C3B2E%27/%3E%3Ccircle%20cx%3D%27280%27%20cy%3D%27280%27%20r%3D%2716%27%20fill%3D%27%23D4AF37%27/%3E%3Ctext%20x%3D%27300%27%20y%3D%27550%27%20font-size%3D%2732%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27800%27%20fill%3D%27%230C3B2E%27%20text-anchor%3D%27middle%27%3EJapanese%20SK5%20Secateurs%3C/text%3E%3C/svg%3E",
+    "description": "Razor-sharp Japanese high-carbon SK5 steel blades for clean precision pruning up to 25mm."
   }
 ];
 
@@ -144,9 +136,9 @@ function initLocalStorage() {
     validProducts = false;
   }
 
-  if (!currentVer || currentVer !== 'v7' || !validProducts) {
+  if (!currentVer || currentVer !== 'v8' || !validProducts) {
     localStorage.setItem('orchard_products', JSON.stringify(DEFAULT_PRODUCTS));
-    localStorage.setItem('orchard_products_version', 'v7');
+    localStorage.setItem('orchard_products_version', 'v8');
   }
   if (!localStorage.getItem('orchard_cart')) {
     localStorage.setItem('orchard_cart', JSON.stringify([]));
@@ -166,7 +158,7 @@ function getProducts() {
     }
   } catch(e) {}
   localStorage.setItem('orchard_products', JSON.stringify(DEFAULT_PRODUCTS));
-  localStorage.setItem('orchard_products_version', 'v7');
+  localStorage.setItem('orchard_products_version', 'v8');
   return DEFAULT_PRODUCTS;
 }
 
