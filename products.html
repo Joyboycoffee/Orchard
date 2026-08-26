@@ -1223,16 +1223,17 @@ img {
         <li><a href="products.html" class="nav-link active">Products</a></li>
         <li><a href="cart.html" class="nav-link">Cart</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="admin.html" class="nav-link">Admin</a></li>
       </ul>
 
-      <div class="nav-actions">
+<div class="nav-actions">
         <a href="cart.html" class="cart-icon-btn">
           <span>🛒 Cart</span>
           <span class="cart-badge">0</span>
         </a>
         <button class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
       </div>
-    </div>
+</div>
   </nav>
 
   <!-- Page Header -->
@@ -1931,32 +1932,5 @@ if (document.readyState === 'loading') {
 }
 
 </script>
-
-<script>
-// ANDROID CONTENT:// PROTOCOL NAVIGATION FALLBACK
-document.addEventListener('click', function(e) {
-  const link = e.target.closest('a');
-  if (!link) return;
-
-  const href = link.getAttribute('href') || '';
-  const isContentProtocol = window.location.protocol === 'content:';
-
-  if (isContentProtocol) {
-    e.preventDefault();
-    if (href.includes('products.html')) {
-      window.location.href = 'index.html#products';
-    } else if (href.includes('cart.html')) {
-      window.location.href = 'index.html#cart';
-    } else if (href.includes('contact.html')) {
-      window.location.href = 'index.html#contact';
-    } else if (href.includes('admin.html')) {
-      window.location.href = 'index.html#admin';
-    } else {
-      window.location.href = 'index.html#home';
-    }
-  }
-});
-</script>
-
 </body>
 </html>

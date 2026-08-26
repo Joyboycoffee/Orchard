@@ -9,7 +9,7 @@ let editingProductId = null;
 
 // Auth Verification
 function checkAdminAuth() {
-  const isLoggedIn = sessionStorage.getItem('orchard_admin_logged') === 'true';
+  const isLoggedIn = (localStorage.getItem('orchard_admin_logged') === 'true' || sessionStorage.getItem('orchard_admin_logged') === 'true');
   const loginSection = document.getElementById('admin-login-section');
   const dashboardSection = document.getElementById('admin-dashboard-section');
 
@@ -18,6 +18,7 @@ function checkAdminAuth() {
     if (dashboardSection) dashboardSection.style.display = 'block';
     renderAdminProducts();
     renderAdminMessages();
+    switchAdminTab('products');
   } else {
     if (loginSection) loginSection.style.display = 'block';
     if (dashboardSection) dashboardSection.style.display = 'none';
@@ -25,22 +26,27 @@ function checkAdminAuth() {
 }
 
 function handleAdminLogin(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   const usernameInput = document.getElementById('admin-username');
   const passwordInput = document.getElementById('admin-password');
 
-  if (usernameInput.value === 'admin' && passwordInput.value === 'admin123') {
+  const username = usernameInput ? usernameInput.value.trim() : '';
+  const password = passwordInput ? passwordInput.value.trim() : '';
+
+  if (username === 'admin' && password === 'admin123') {
+    localStorage.setItem('orchard_admin_logged', 'true');
     sessionStorage.setItem('orchard_admin_logged', 'true');
-    showToast('Welcome back, Admin! 🛡️', 'success');
+    if (typeof showToast === 'function') showToast('Welcome back, Admin! 🛡️', 'success');
     checkAdminAuth();
   } else {
-    showToast('Invalid Username or Password! (Hint: admin / admin123)', 'danger');
+    if (typeof showToast === 'function') showToast('Invalid Username or Password! (Hint: admin / admin123)', 'danger');
   }
 }
 
 function handleAdminLogout() {
+  localStorage.removeItem('orchard_admin_logged');
   sessionStorage.removeItem('orchard_admin_logged');
-  showToast('Logged out of Admin Portal', 'success');
+  if (typeof showToast === 'function') showToast('Logged out of Admin Portal', 'success');
   checkAdminAuth();
 }
 
@@ -80,8 +86,8 @@ function renderAdminProducts() {
     </tr>
   `).join('');
 
-  // Update Stats Counters
-  document.getElementById('stat-total-products').textContent = products.length;
+  const statEl = document.getElementById('stat-total-products');
+  if (statEl) statEl.textContent = products.length;
 }
 
 // Render Submitted Contact Messages
@@ -90,8 +96,8 @@ function renderAdminMessages() {
   if (!container) return;
 
   const messages = JSON.parse(localStorage.getItem('orchard_messages')) || [];
-
-  document.getElementById('stat-total-messages').textContent = messages.length;
+  const statEl = document.getElementById('stat-total-messages');
+  if (statEl) statEl.textContent = messages.length;
 
   if (messages.length === 0) {
     container.innerHTML = `
@@ -122,9 +128,12 @@ function renderAdminMessages() {
 // Product CRUD Handlers
 function openAddProductModal() {
   editingProductId = null;
-  document.getElementById('product-modal-title').textContent = 'Add New Product';
-  document.getElementById('product-form').reset();
-  document.getElementById('product-modal').classList.add('active');
+  const titleEl = document.getElementById('product-modal-title');
+  if (titleEl) titleEl.textContent = 'Add New Product';
+  const formEl = document.getElementById('product-form');
+  if (formEl) formEl.reset();
+  const modalEl = document.getElementById('product-modal');
+  if (modalEl) modalEl.classList.add('active');
 }
 
 function openEditProductModal(productId) {
@@ -133,26 +142,29 @@ function openEditProductModal(productId) {
   if (!product) return;
 
   editingProductId = productId;
-  document.getElementById('product-modal-title').textContent = 'Edit Product Details';
+  const titleEl = document.getElementById('product-modal-title');
+  if (titleEl) titleEl.textContent = 'Edit Product Details';
   
-  document.getElementById('prod-name').value = product.name;
-  document.getElementById('prod-category').value = product.category;
-  document.getElementById('prod-price').value = product.price;
-  document.getElementById('prod-original-price').value = product.originalPrice || '';
-  document.getElementById('prod-stock').value = product.stock;
-  document.getElementById('prod-badge').value = product.badge || '';
-  document.getElementById('prod-image').value = product.image;
-  document.getElementById('prod-description').value = product.description;
+  if (document.getElementById('prod-name')) document.getElementById('prod-name').value = product.name;
+  if (document.getElementById('prod-category')) document.getElementById('prod-category').value = product.category;
+  if (document.getElementById('prod-price')) document.getElementById('prod-price').value = product.price;
+  if (document.getElementById('prod-original-price')) document.getElementById('prod-original-price').value = product.originalPrice || '';
+  if (document.getElementById('prod-stock')) document.getElementById('prod-stock').value = product.stock;
+  if (document.getElementById('prod-badge')) document.getElementById('prod-badge').value = product.badge || '';
+  if (document.getElementById('prod-image')) document.getElementById('prod-image').value = product.image;
+  if (document.getElementById('prod-description')) document.getElementById('prod-description').value = product.description;
 
-  document.getElementById('product-modal').classList.add('active');
+  const modalEl = document.getElementById('product-modal');
+  if (modalEl) modalEl.classList.add('active');
 }
 
 function closeProductModal() {
-  document.getElementById('product-modal').classList.remove('active');
+  const modalEl = document.getElementById('product-modal');
+  if (modalEl) modalEl.classList.remove('active');
 }
 
 function handleProductFormSubmit(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
 
   const name = document.getElementById('prod-name').value.trim();
   const category = document.getElementById('prod-category').value;
@@ -173,7 +185,6 @@ function handleProductFormSubmit(e) {
   let products = getProducts();
 
   if (editingProductId) {
-    // Edit existing product
     products = products.map(p => {
       if (p.id === editingProductId) {
         return {
@@ -191,9 +202,8 @@ function handleProductFormSubmit(e) {
       }
       return p;
     });
-    showToast('Product updated successfully! ✏️', 'success');
+    if (typeof showToast === 'function') showToast('Product updated successfully! ✏️', 'success');
   } else {
-    // Add new product
     const newProduct = {
       id: 'prod-' + Date.now(),
       name,
@@ -208,7 +218,7 @@ function handleProductFormSubmit(e) {
       description
     };
     products.unshift(newProduct);
-    showToast('New product added to catalog! 🍏', 'success');
+    if (typeof showToast === 'function') showToast('New product added to catalog! 🍏', 'success');
   }
 
   saveProducts(products);
@@ -223,7 +233,7 @@ function deleteProduct(productId) {
   products = products.filter(p => p.id !== productId);
   saveProducts(products);
   renderAdminProducts();
-  showToast('Product deleted from catalog', 'danger');
+  if (typeof showToast === 'function') showToast('Product deleted from catalog', 'danger');
 }
 
 // Tab Switching
