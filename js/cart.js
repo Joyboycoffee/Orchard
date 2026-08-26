@@ -14,9 +14,9 @@ function renderCart() {
   
   if (!tableBody) return;
 
-  const cart = getCart();
+  const cart = typeof getCart === 'function' ? getCart() : [];
 
-  if (cart.length === 0) {
+  if (!cart || cart.length === 0) {
     if (layoutContainer) layoutContainer.style.display = 'none';
     if (emptyState) emptyState.style.display = 'block';
     return;
@@ -25,35 +25,50 @@ function renderCart() {
   if (layoutContainer) layoutContainer.style.display = 'grid';
   if (emptyState) emptyState.style.display = 'none';
 
-  tableBody.innerHTML = cart.map(item => `
-    <tr>
-      <td>
-        <div class="cart-item-info">
-          <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.onerror=null; this.src='${item.fallbackImage || LOGO_BASE64}';" />
-          <div>
-            <div class="cart-item-title">${item.name}</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">${formatCurrency(item.price)} each</div>
-          </div>
-        </div>
-      </td>
-      <td>${formatCurrency(item.price)}</td>
-      <td>
-        <div class="qty-control">
-          <button class="qty-btn" onclick="updateItemQty('${item.id}', ${item.quantity - 1})">-</button>
-          <span class="qty-value">${item.quantity}</span>
-          <button class="qty-btn" onclick="updateItemQty('${item.id}', ${item.quantity + 1})">+</button>
-        </div>
-      </td>
-      <td style="font-weight: 700; color: var(--primary-dark);">
-        ${formatCurrency(item.price * item.quantity)}
-      </td>
-      <td style="text-align: right;">
-        <button class="remove-btn" onclick="removeItem('${item.id}')" title="Remove item">
-          🗑️
-        </button>
-      </td>
-    </tr>
-  `).join('');
+  const logoFallback = typeof LOGO_BASE64 !== 'undefined' ? LOGO_BASE64 : '';
+
+  try {
+    tableBody.innerHTML = cart.map(item => {
+      const price = Number(item.price) || 0;
+      const qty = Number(item.quantity) || 1;
+      const total = price * qty;
+      const fallback = item.fallbackImage || logoFallback;
+      const fmtPrice = typeof formatCurrency === 'function' ? formatCurrency(price) : '₹' + price;
+      const fmtTotal = typeof formatCurrency === 'function' ? formatCurrency(total) : '₹' + total;
+
+      return `
+        <tr>
+          <td>
+            <div class="cart-item-info">
+              <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.onerror=null; this.src='${fallback}';" />
+              <div>
+                <div class="cart-item-title">${item.name}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">${fmtPrice} each</div>
+              </div>
+            </div>
+          </td>
+          <td>${fmtPrice}</td>
+          <td>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateItemQty('${item.id}', ${qty - 1})">-</button>
+              <span class="qty-value">${qty}</span>
+              <button class="qty-btn" onclick="updateItemQty('${item.id}', ${qty + 1})">+</button>
+            </div>
+          </td>
+          <td style="font-weight: 700; color: var(--primary-dark);">
+            ${fmtTotal}
+          </td>
+          <td style="text-align: right;">
+            <button class="remove-btn" onclick="removeItem('${item.id}')" title="Remove item">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  } catch (err) {
+    console.error('Error rendering cart table:', err);
+  }
 
   updateOrderTotals();
 }
@@ -75,20 +90,30 @@ function removeItem(productId) {
   cart = cart.filter(item => item.id !== productId);
   saveCart(cart);
   renderCart();
-  showToast('Item removed from cart', 'danger');
+  if (typeof showToast === 'function') showToast('Item removed from cart', 'danger');
 }
 
 function updateOrderTotals() {
   const cart = getCart();
-  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cart.reduce((sum, item) => {
+    const price = Number(item.price) || 0;
+    const qty = Number(item.quantity) || 1;
+    return sum + (price * qty);
+  }, 0);
+
   const shipping = subtotal >= 1999 || subtotal === 0 ? 0 : 150;
   const discountAmount = Math.round((subtotal * appliedDiscount) / 100);
   const grandTotal = Math.max(0, subtotal - discountAmount + shipping);
 
-  document.getElementById('cart-subtotal').textContent = formatCurrency(subtotal);
-  document.getElementById('cart-shipping').textContent = shipping === 0 ? 'FREE' : formatCurrency(shipping);
-  document.getElementById('cart-discount').textContent = `- ${formatCurrency(discountAmount)}`;
-  document.getElementById('cart-grand-total').textContent = formatCurrency(grandTotal);
+  const fmtSub = typeof formatCurrency === 'function' ? formatCurrency(subtotal) : '₹' + subtotal;
+  const fmtShip = shipping === 0 ? 'FREE' : (typeof formatCurrency === 'function' ? formatCurrency(shipping) : '₹' + shipping);
+  const fmtDisc = '- ' + (typeof formatCurrency === 'function' ? formatCurrency(discountAmount) : '₹' + discountAmount);
+  const fmtGrand = typeof formatCurrency === 'function' ? formatCurrency(grandTotal) : '₹' + grandTotal;
+
+  if (document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = fmtSub;
+  if (document.getElementById('cart-shipping')) document.getElementById('cart-shipping').textContent = fmtShip;
+  if (document.getElementById('cart-discount')) document.getElementById('cart-discount').textContent = fmtDisc;
+  if (document.getElementById('cart-grand-total')) document.getElementById('cart-grand-total').textContent = fmtGrand;
 }
 
 // Promo Code Apply
@@ -99,12 +124,12 @@ function applyCoupon() {
   const code = couponInput.value.trim().toUpperCase();
   if (code === 'WELCOME10') {
     appliedDiscount = 10;
-    showToast('Promo code WELCOME10 applied! 10% OFF 🎉', 'success');
+    if (typeof showToast === 'function') showToast('Promo code WELCOME10 applied! 10% OFF 🎉', 'success');
   } else if (code === 'ORCHARD20') {
     appliedDiscount = 20;
-    showToast('Promo code ORCHARD20 applied! 20% OFF 🌟', 'success');
+    if (typeof showToast === 'function') showToast('Promo code ORCHARD20 applied! 20% OFF 🌟', 'success');
   } else {
-    showToast('Invalid promo code. Try WELCOME10', 'danger');
+    if (typeof showToast === 'function') showToast('Invalid promo code. Try WELCOME10', 'danger');
   }
 
   updateOrderTotals();
@@ -114,7 +139,7 @@ function applyCoupon() {
 function openCheckoutModal() {
   const cart = getCart();
   if (cart.length === 0) {
-    showToast('Your cart is empty!', 'danger');
+    if (typeof showToast === 'function') showToast('Your cart is empty!', 'danger');
     return;
   }
   const modal = document.getElementById('checkout-modal');
@@ -127,14 +152,13 @@ function closeCheckoutModal() {
 }
 
 function handleCheckoutSubmit(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   
-  // Clear Cart after successful order simulation
   saveCart([]);
   closeCheckoutModal();
   renderCart();
   
-  showToast('🎉 Order placed successfully! Thank you for choosing Orchard.', 'success');
+  if (typeof showToast === 'function') showToast('🎉 Order placed successfully! Thank you for choosing Orchard.', 'success');
 }
 
 function initCartApp() {
