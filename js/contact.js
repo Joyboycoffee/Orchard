@@ -43,9 +43,15 @@ function handleContactSubmit(e) {
   showToast('Message submitted successfully! Admin will review it in the Admin Panel.', 'success');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initContactApp() {
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', handleContactSubmit);
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initContactApp);
+} else {
+  initContactApp();
+}

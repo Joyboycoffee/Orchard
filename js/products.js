@@ -63,7 +63,7 @@ function renderProducts() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initProductsApp() {
   renderProducts();
 
   // Category Filter Pills Listener
@@ -85,4 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
       renderProducts();
     });
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initProductsApp);
+} else {
+  initProductsApp();
+}

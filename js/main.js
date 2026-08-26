@@ -291,7 +291,7 @@ function initScrollObserver() {
 }
 
 // DOM Content Loaded Handler
-document.addEventListener('DOMContentLoaded', () => {
+function initMainApp() {
   initLocalStorage();
   updateCartBadge();
   highlightActiveNav();
@@ -317,4 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
       img.src = LOGO_BASE64;
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMainApp);
+} else {
+  initMainApp();
+}

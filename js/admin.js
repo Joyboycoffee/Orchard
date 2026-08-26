@@ -238,7 +238,7 @@ function switchAdminTab(tabName) {
   if (activeContent) activeContent.style.display = 'block';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAdminApp() {
   checkAdminAuth();
 
   const loginForm = document.getElementById('admin-login-form');
@@ -250,4 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (productForm) {
     productForm.addEventListener('submit', handleProductFormSubmit);
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAdminApp);
+} else {
+  initAdminApp();
+}

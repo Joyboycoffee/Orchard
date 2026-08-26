@@ -137,6 +137,12 @@ function handleCheckoutSubmit(e) {
   showToast('🎉 Order placed successfully! Thank you for choosing Orchard.', 'success');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initCartApp() {
   renderCart();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCartApp);
+} else {
+  initCartApp();
+}
