@@ -1773,5 +1773,32 @@ if (document.readyState === 'loading') {
 }
 
 </script>
+
+<script>
+// ANDROID CONTENT:// PROTOCOL NAVIGATION FALLBACK
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('a');
+  if (!link) return;
+
+  const href = link.getAttribute('href') || '';
+  const isContentProtocol = window.location.protocol === 'content:';
+
+  if (isContentProtocol) {
+    e.preventDefault();
+    if (href.includes('products.html')) {
+      window.location.href = 'index.html#products';
+    } else if (href.includes('cart.html')) {
+      window.location.href = 'index.html#cart';
+    } else if (href.includes('contact.html')) {
+      window.location.href = 'index.html#contact';
+    } else if (href.includes('admin.html')) {
+      window.location.href = 'index.html#admin';
+    } else {
+      window.location.href = 'index.html#home';
+    }
+  }
+});
+</script>
+
 </body>
 </html>
