@@ -37,7 +37,7 @@ function renderProducts() {
     <div class="product-card">
       ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
       <div class="product-img-wrapper">
-        <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80';" />
+        <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" onerror="this.onerror=null; this.src=product.fallbackImage || LOGO_BASE64;" />
       </div>
       <div class="product-info">
         <span class="product-category">${product.categoryName || 'Orchard Produce'}</span>
