@@ -1334,24 +1334,24 @@ img {
       <form onsubmit="handleCheckoutSubmit(event)">
         <div class="form-group">
           <label class="form-label">Full Name</label>
-          <input type="text" class="form-input" required placeholder="Aarav Sharma" />
+          <input type="text" id="cust-name" class="form-input" required placeholder="Aarav Sharma" />
         </div>
 
         <div class="form-group">
           <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-input" required placeholder="+91 98765 43210" />
+          <input type="tel" id="cust-phone" class="form-input" required placeholder="+91 98765 43210" />
         </div>
 
         <div class="form-group">
           <label class="form-label">Shipping Address</label>
-          <input type="text" class="form-input" required placeholder="12 Mall Road, Manali, HP" />
+          <input type="text" id="cust-address" class="form-input" required placeholder="12 Mall Road, Manali, HP" />
         </div>
 
         <div class="form-group">
           <label class="form-label">Payment Option</label>
-          <select class="form-input" required>
-            <option value="cod">Cash on Delivery (COD)</option>
-            <option value="upi">UPI / Online NetBanking</option>
+          <select id="cust-payment" class="form-input" required>
+            <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+            <option value="UPI / Online NetBanking">UPI / Online NetBanking</option>
           </select>
         </div>
 
@@ -1912,12 +1912,52 @@ function closeCheckoutModal() {
 
 function handleCheckoutSubmit(e) {
   if (e) e.preventDefault();
-  
+
+  const cart = typeof getCart === 'function' ? getCart() : [];
+  if (!cart || cart.length === 0) {
+    if (typeof showToast === 'function') showToast('Your cart is empty!', 'danger');
+    return;
+  }
+
+  const custName = document.getElementById('cust-name') ? document.getElementById('cust-name').value.trim() : 'Customer';
+  const custPhone = document.getElementById('cust-phone') ? document.getElementById('cust-phone').value.trim() : '';
+  const custAddress = document.getElementById('cust-address') ? document.getElementById('cust-address').value.trim() : '';
+  const custPayment = document.getElementById('cust-payment') ? document.getElementById('cust-payment').value : 'Cash on Delivery';
+
+  const subtotal = cart.reduce((sum, item) => sum + ((Number(item.price) || 0) * (Number(item.quantity) || 1)), 0);
+  const shipping = subtotal >= 1999 || subtotal === 0 ? 0 : 150;
+  const discountAmount = Math.round((subtotal * (typeof appliedDiscount !== 'undefined' ? appliedDiscount : 0)) / 100);
+  const grandTotal = Math.max(0, subtotal - discountAmount + shipping);
+
+  const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+  const newOrder = {
+    id: orderId,
+    customerName: custName,
+    phone: custPhone,
+    address: custAddress,
+    paymentMethod: custPayment,
+    items: cart,
+    subtotal: subtotal,
+    shipping: shipping,
+    discount: discountAmount,
+    totalAmount: grandTotal,
+    status: 'Pending',
+    date: new Date().toLocaleDateString('en-IN', {
+      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    })
+  };
+
+  let orders = JSON.parse(localStorage.getItem('orchard_orders')) || [];
+  orders.unshift(newOrder);
+  localStorage.setItem('orchard_orders', JSON.stringify(orders));
+
   saveCart([]);
   closeCheckoutModal();
   renderCart();
-  
-  if (typeof showToast === 'function') showToast('🎉 Order placed successfully! Thank you for choosing Orchard.', 'success');
+
+  if (typeof showToast === 'function') {
+    showToast(`🎉 Order <strong>#${orderId}</strong> placed! View in Admin Panel.`, 'success');
+  }
 }
 
 function initCartApp() {

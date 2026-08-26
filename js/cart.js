@@ -153,12 +153,52 @@ function closeCheckoutModal() {
 
 function handleCheckoutSubmit(e) {
   if (e) e.preventDefault();
-  
+
+  const cart = typeof getCart === 'function' ? getCart() : [];
+  if (!cart || cart.length === 0) {
+    if (typeof showToast === 'function') showToast('Your cart is empty!', 'danger');
+    return;
+  }
+
+  const custName = document.getElementById('cust-name') ? document.getElementById('cust-name').value.trim() : 'Customer';
+  const custPhone = document.getElementById('cust-phone') ? document.getElementById('cust-phone').value.trim() : '';
+  const custAddress = document.getElementById('cust-address') ? document.getElementById('cust-address').value.trim() : '';
+  const custPayment = document.getElementById('cust-payment') ? document.getElementById('cust-payment').value : 'Cash on Delivery';
+
+  const subtotal = cart.reduce((sum, item) => sum + ((Number(item.price) || 0) * (Number(item.quantity) || 1)), 0);
+  const shipping = subtotal >= 1999 || subtotal === 0 ? 0 : 150;
+  const discountAmount = Math.round((subtotal * (typeof appliedDiscount !== 'undefined' ? appliedDiscount : 0)) / 100);
+  const grandTotal = Math.max(0, subtotal - discountAmount + shipping);
+
+  const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+  const newOrder = {
+    id: orderId,
+    customerName: custName,
+    phone: custPhone,
+    address: custAddress,
+    paymentMethod: custPayment,
+    items: cart,
+    subtotal: subtotal,
+    shipping: shipping,
+    discount: discountAmount,
+    totalAmount: grandTotal,
+    status: 'Pending',
+    date: new Date().toLocaleDateString('en-IN', {
+      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    })
+  };
+
+  let orders = JSON.parse(localStorage.getItem('orchard_orders')) || [];
+  orders.unshift(newOrder);
+  localStorage.setItem('orchard_orders', JSON.stringify(orders));
+
   saveCart([]);
   closeCheckoutModal();
   renderCart();
-  
-  if (typeof showToast === 'function') showToast('🎉 Order placed successfully! Thank you for choosing Orchard.', 'success');
+
+  if (typeof showToast === 'function') {
+    showToast(`🎉 Order <strong>#${orderId}</strong> placed! View in Admin Panel.`, 'success');
+  }
 }
 
 function initCartApp() {

@@ -1,7 +1,7 @@
 /* 
   ================================================================
   ORCHARD E-COMMERCE PLATFORM - ADMIN PANEL LOGIC
-  Handles: Admin Login Auth, Product CRUD, Message Inbox in LocalStorage
+  Handles: Admin Login Auth, Product CRUD, Orders Management, Message Inbox
   ================================================================
 */
 
@@ -17,6 +17,7 @@ function checkAdminAuth() {
     if (loginSection) loginSection.style.display = 'none';
     if (dashboardSection) dashboardSection.style.display = 'block';
     renderAdminProducts();
+    renderAdminOrders();
     renderAdminMessages();
     switchAdminTab('products');
   } else {
@@ -55,21 +56,22 @@ function renderAdminProducts() {
   const tableBody = document.getElementById('admin-products-table-body');
   if (!tableBody) return;
 
-  const products = getProducts();
+  const products = typeof getProducts === 'function' ? getProducts() : [];
+  const logoFallback = typeof LOGO_BASE64 !== 'undefined' ? LOGO_BASE64 : '';
 
   tableBody.innerHTML = products.map(product => `
     <tr>
       <td>
         <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <img src="${product.image}" alt="${product.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;" onerror="this.onerror=null; this.src='${product.fallbackImage || LOGO_BASE64}';" />
+          <img src="${product.image}" alt="${product.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;" onerror="this.onerror=null; this.src='${product.fallbackImage || logoFallback}';" />
           <div>
             <div style="font-weight: 700; color: var(--primary-dark);">${product.name}</div>
             <div style="font-size: 0.75rem; color: var(--text-muted);">${product.categoryName || product.category}</div>
           </div>
         </div>
       </td>
-      <td>${formatCurrency(product.price)}</td>
-      <td>${product.originalPrice ? formatCurrency(product.originalPrice) : '-'}</td>
+      <td>${typeof formatCurrency === 'function' ? formatCurrency(product.price) : '₹' + product.price}</td>
+      <td>${product.originalPrice ? (typeof formatCurrency === 'function' ? formatCurrency(product.originalPrice) : '₹' + product.originalPrice) : '-'}</td>
       <td>
         <span style="padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 700; font-size: 0.75rem; background: ${product.stock > 20 ? '#ecfdf5' : '#fee2e2'}; color: ${product.stock > 20 ? '#10b981' : '#ef4444'};">
           ${product.stock} units
@@ -88,6 +90,109 @@ function renderAdminProducts() {
 
   const statEl = document.getElementById('stat-total-products');
   if (statEl) statEl.textContent = products.length;
+}
+
+// Render Placed Orders in Admin Panel
+function renderAdminOrders() {
+  const container = document.getElementById('admin-orders-container');
+  if (!container) return;
+
+  const orders = JSON.parse(localStorage.getItem('orchard_orders')) || [];
+  const statOrdersEl = document.getElementById('stat-total-orders');
+  if (statOrdersEl) statOrdersEl.textContent = orders.length;
+
+  if (orders.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 3.5rem 1rem; background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <div style="font-size: 3rem; margin-bottom: 0.75rem;">🛍️</div>
+        <h4 style="font-size: 1.25rem; font-weight: 800; color: var(--primary-dark);">No Customer Orders Yet</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem;">Orders submitted during checkout on cart.html will appear here.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = orders.map(order => {
+    const itemsListHtml = (order.items || []).map(item => `
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.3rem 0; border-bottom: 1px dashed var(--border-color);">
+        <span>${item.name} × <strong>${item.quantity || 1}</strong></span>
+        <span style="font-weight: 700; color: var(--primary-dark);">${typeof formatCurrency === 'function' ? formatCurrency((Number(item.price) || 0) * (Number(item.quantity) || 1)) : '₹' + ((item.price || 0) * (item.quantity || 1))}</span>
+      </div>
+    `).join('');
+
+    const isCompleted = order.status === 'Completed';
+    const statusBg = isCompleted ? '#ecfdf5' : '#fffbebe6';
+    const statusColor = isCompleted ? '#10b981' : '#b45309';
+
+    return `
+      <div style="background: #ffffff; padding: 1.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-dark);">Order #${order.id}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">${order.date}</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="padding: 0.3rem 0.8rem; border-radius: 99px; font-weight: 700; font-size: 0.8rem; background: ${statusBg}; color: ${statusColor};">
+              ● ${order.status || 'Pending'}
+            </span>
+            <button onclick="toggleOrderStatus('${order.id}')" style="background: var(--primary-bg); color: var(--primary-dark); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; font-size: 0.8rem;">
+              🔄 Change Status
+            </button>
+            <button onclick="deleteOrder('${order.id}')" style="background: #fee2e2; color: #ef4444; padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; font-size: 0.8rem;">
+              🗑️ Cancel
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 1rem; background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm);">
+          <div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Customer Details</div>
+            <div style="font-weight: 700; color: var(--primary-dark); margin-top: 0.2rem;">${order.customerName}</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">📞 ${order.phone}</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">📍 ${order.address}</div>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Payment Info</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-top: 0.2rem;">${order.paymentMethod}</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Shipping: ${order.shipping === 0 ? 'FREE' : (typeof formatCurrency === 'function' ? formatCurrency(order.shipping) : '₹' + order.shipping)}</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.4rem;">Ordered Items</div>
+          ${itemsListHtml}
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 0.75rem; font-weight: 800;">
+          <span style="color: var(--primary-dark);">Total Order Amount:</span>
+          <span style="font-size: 1.2rem; color: var(--primary);">${typeof formatCurrency === 'function' ? formatCurrency(order.totalAmount) : '₹' + order.totalAmount}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleOrderStatus(orderId) {
+  let orders = JSON.parse(localStorage.getItem('orchard_orders')) || [];
+  orders = orders.map(order => {
+    if (order.id === orderId) {
+      const newStatus = order.status === 'Completed' ? 'Pending' : 'Completed';
+      return { ...order, status: newStatus };
+    }
+    return order;
+  });
+  localStorage.setItem('orchard_orders', JSON.stringify(orders));
+  renderAdminOrders();
+  if (typeof showToast === 'function') showToast('Order status updated!', 'success');
+}
+
+function deleteOrder(orderId) {
+  if (!confirm('Are you sure you want to delete/cancel this order?')) return;
+  let orders = JSON.parse(localStorage.getItem('orchard_orders')) || [];
+  orders = orders.filter(o => o.id !== orderId);
+  localStorage.setItem('orchard_orders', JSON.stringify(orders));
+  renderAdminOrders();
+  if (typeof showToast === 'function') showToast('Order removed from panel', 'danger');
 }
 
 // Render Submitted Contact Messages
@@ -137,7 +242,7 @@ function openAddProductModal() {
 }
 
 function openEditProductModal(productId) {
-  const products = getProducts();
+  const products = typeof getProducts === 'function' ? getProducts() : [];
   const product = products.find(p => p.id === productId);
   if (!product) return;
 
@@ -182,7 +287,7 @@ function handleProductFormSubmit(e) {
     'accessories': 'Accessories'
   };
 
-  let products = getProducts();
+  let products = typeof getProducts === 'function' ? getProducts() : [];
 
   if (editingProductId) {
     products = products.map(p => {
@@ -229,7 +334,7 @@ function handleProductFormSubmit(e) {
 function deleteProduct(productId) {
   if (!confirm('Are you sure you want to delete this product?')) return;
 
-  let products = getProducts();
+  let products = typeof getProducts === 'function' ? getProducts() : [];
   products = products.filter(p => p.id !== productId);
   saveProducts(products);
   renderAdminProducts();
@@ -238,13 +343,21 @@ function deleteProduct(productId) {
 
 // Tab Switching
 function switchAdminTab(tabName) {
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+    btn.style.borderBottom = 'none';
+    btn.style.color = 'var(--text-muted)';
+  });
   document.querySelectorAll('.admin-tab-content').forEach(content => content.style.display = 'none');
 
   const activeBtn = document.getElementById(`tab-btn-${tabName}`);
   const activeContent = document.getElementById(`admin-tab-${tabName}`);
 
-  if (activeBtn) activeBtn.classList.add('active');
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    activeBtn.style.borderBottom = '3px solid var(--primary-dark)';
+    activeBtn.style.color = 'var(--primary-dark)';
+  }
   if (activeContent) activeContent.style.display = 'block';
 }
 
